@@ -1,4 +1,6 @@
 const gratitude={
+ orion:'Hoot! Your careful steps kept my archive record safe. I will remember to save before trying a risky fix.',
+ ember:'You helped me turn worry into a clear plan. Thank you for guiding our festival team with calm, honest updates.',
  luna:'You made it easier to ask for help. I feel much more confident now.',
  celeste:'Your patient questions helped me trace the clues. My reading can continue!',
  direx:'Clear instructions are a fine kind of magic. Thank you for guiding me with care.',

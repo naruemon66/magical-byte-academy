@@ -36,7 +36,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   const replaySave=await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));const expectedReplay=structuredClone(storySave);expectedReplay.questResults[0].attempts++;expectedReplay.learningPoints+=500;expectedReplay.lastPointsEarned=100;assert.deepEqual(replaySave,expectedReplay);
   await page.locator('#next-case').click();await page.locator('#endless-start').click();
   const sequence=[];
-  for(let i=0;i<36;i++){if(i%6===0)console.log(`Endless ${i+1}/36`);
+  for(let i=0;i<42;i++){if(i%6===0)console.log(`Endless ${i+1}/42`);
    let saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));
    const a=saved.endless.active,c=materialize(a.templateId,a.variant,a.difficulty);sequence.push(c.id);
    await page.locator('#greet').click();
@@ -47,9 +47,9 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
    assert.match(await page.locator('main').textContent(),/Endless request resolved/);
    saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));
    assert.equal(saved.endless.completed,i+1);assert.equal(saved.stars,storySave.stars);assert.equal(saved.xp,storySave.xp);assert.deepEqual(saved.hearts,storySave.hearts);
-   if(i<35)await page.locator('#next-case').click();
+   if(i<41)await page.locator('#next-case').click();
   }
-  assert.equal(new Set(sequence.slice(0,35)).size,35);sequence.slice(1).forEach((id,i)=>assert.notEqual(id,sequence[i]));
+  assert.equal(new Set(sequence.slice(0,41)).size,41);sequence.slice(1).forEach((id,i)=>assert.notEqual(id,sequence[i]));
   // Opening practice from a completed Endless reward must return safely with no active request.
   await page.locator('[data-action="journal"]').click();await page.getByText('Story tickets · practice completed cases',{exact:true}).click();await page.locator('[data-replay="0"]').click();await page.locator('#greet').click();for(const step of cases[0].steps)await turn(page,step.example);await page.locator('#next-case').click();assert.ok(await page.locator('#endless-start').isVisible());
   await page.locator('#endless-start').click();assert.match(await page.locator('.returning').textContent(),/advice|previous|last|remember|visit|guidance|session|recommendation/i);
@@ -99,6 +99,6 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   await boot(legacy);await legacy.locator('#continue').click();await legacy.locator('#player-name').fill('Legacy Advisor');await legacy.locator('#profile-form button').click();assert.equal(await legacy.locator('#answer').inputValue(),'Please select Academy-Guest.');assert.match(await legacy.locator('#goal').textContent(),/Academy-Guest/);await legacy.close();
   const failedArt=await browser.newPage();failedArt.on('pageerror',e=>errors.push(e.message));await failedArt.route('**/assets/*.webp',route=>route.abort());await boot(failedArt);assert.ok(await failedArt.locator('.asset-warning').isVisible());assert.ok(await failedArt.locator('#new-game').isVisible());await failedArt.close();
   assert.deepEqual(errors,[]);
-  console.log('PASS: 12 story cases (60 turns), 36 endless cases (180 turns), 35 unique templates then safe repeat, all five Team Talk cases via four-choice responses (25 turns), typed/MCQ/simulated speech scoring, incorrect-modal retries, old-save migration, resume, replay protection, returning dialogue, keyboard, mobile, dialogs/reset, image-failure fallback; no browser exceptions.');
+  console.log('PASS: 12 story cases (60 turns), 42 endless cases (210 turns), 41 unique templates then safe repeat, all five Team Talk cases via four-choice responses (25 turns), typed/MCQ/simulated speech scoring, incorrect-modal retries, old-save migration, resume, replay protection, returning dialogue, keyboard, mobile, dialogs/reset, image-failure fallback; no browser exceptions.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

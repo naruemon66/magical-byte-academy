@@ -4,11 +4,11 @@ An English-learning visual novel for **273411 — Communicative English for Comp
 
 ## What changed in V2
 
-- Cinematic fantasy chamber and ten original transparent, detailed illustrated character portraits. The scene uses **2D Cinematic Fantasy Visual Novel artwork**, with soft shadows, subtle glow, 8px CSS idle motion and a short speaking reaction. There are no toy-like models or WebGL requirements. Each character currently has one facial expression; mood affects motion, glow and authored dialogue, not facial morphing. Optional alternate expression images are supported.
+- Cinematic fantasy chamber and twelve original transparent, detailed illustrated character portraits. The scene uses **2D Cinematic Fantasy Visual Novel artwork**, with soft shadows, subtle glow, 8px CSS idle motion and a short speaking reaction. There are no toy-like models or WebGL requirements. Each character currently has one facial expression; mood affects motion, glow and authored dialogue, not facial morphing. Optional alternate expression images are supported.
 - The title offers only Start Game, Continue, How to Play, and Settings. A short guide-light introduction explains your role. During a case, the scene, dialogue, response, Hint, Submit, and feedback are the focus. Detailed progress lives in the journal.
 - The original nine five-turn story cases retain stable indices and technical content. Characters are aligned with V2 roles: Mix handles programming, Direx presents history, Felix handles networking, and Serena leads incident communication. Three new cases introduce Noah’s hardware issue, Aurora’s research backup, and Professor Ivy’s online meeting, creating **12 cases across four chapters**.
-- All **ten characters** have at least three authored Endless templates, distinct roles, speech styles, specialties, and relationship-dependent return dialogue.
-- **Endless Support** unlocks after the story. A shuffled bag covers **35 authored templates** before cycling, avoids adjacent repeats even across cycle boundaries, and prefers a different visitor when possible. Context, vocabulary, difficulty, and communication goals vary. Foundation teaches technical intent; Standard also requires a polite request; advanced advice also asks for a reason using a purpose connector. These are reusable authored variations, not newly generated AI content.
+- The original **ten characters** have at least three authored Endless templates, distinct roles, speech styles, specialties, and relationship-dependent return dialogue.
+- **Endless Support** unlocks after the story. A shuffled bag covers **41 authored templates** before cycling, avoids adjacent repeats even across cycle boundaries, and prefers a different visitor when possible. Context, vocabulary, difficulty, and communication goals vary. Foundation teaches technical intent; Standard also requires a polite request; advanced advice also asks for a reason using a purpose connector. These are reusable authored variations, not newly generated AI content.
 - Endless scores, friendship, completed requests, average/best score, template coverage, and achievements are stored separately from story rewards. Replaying a completed story case never awards its main rewards again.
 - **Existing V1 LocalStorage saves migrate in place**, retaining completed indices, stars, XP, relationships, settings, and the partial conversation/draft. Players who finished the original nine cases can continue with chapter four. Historical friendship keys are preserved even when a V2 story role changes.
 
@@ -41,7 +41,7 @@ Type, Speak, and the new **Choose** mode share one text evaluator. Every turn of
 
 Practice `Could you please + base verb`, `Would you mind + -ing`, `May I suggest`, `I'd be happy to help`, `We could`, and `Shall we`. Several natural forms and contractions are accepted. Feedback identifies Direct, Polite, or Professional communication, explains selected grammar rules, and compares all choices after submission. It is a limited rule-based check, not a complete semantic or grammar assessment.
 
-**Journal → Unit 4 · Team Talk practice** is available during the story. Five complete software-team situations cover Sprint Planning, Code Review, Asking for Help, Blockers, and advice to a teammate. Disagreement tasks require acknowledgment, a concern, an alternative, and a reason. These five scenarios also enter Endless, expanding its library from 30 to 35 templates. Existing saved bags finish before a fresh 35-template cycle; no save reset is required. Team practice does not duplicate story rewards.
+**Journal → Unit 4 · Team Talk practice** is available during the story. Five complete software-team situations cover Sprint Planning, Code Review, Asking for Help, Blockers, and advice to a teammate. Disagreement tasks require acknowledgment, a concern, an alternative, and a reason. These five scenarios also enter Endless, expanding its library from 30 to 35 templates. Six Orion/Ember context variants now bring the pool to 41. Existing saved bags finish before a fresh 41-template cycle; no save reset is required. Team practice does not duplicate story rewards.
 
 The activities implement the Unit 4 patterns requested by the user. Instructor materials or approval have not been provided, and no classroom validation is claimed.
 
@@ -55,7 +55,7 @@ Speak uses SpeechRecognition/webkitSpeechRecognition. On supported browsers, sta
 
 ## Artwork and accessibility
 
-The local castle image and ten separate full-body WebP illustrations total about **3.7 MB**. Each solo asset is 264–426 KB, preserves alpha transparency and is shared by poster, dialogue and appreciation views. There is no group-image cropping. The game has an image-loading screen and a readable text-play fallback if artwork fails. System reduced motion and a manual effects toggle are respected; larger reading text, native buttons/dialogs, keyboard focus, and responsive layouts are supported. Details are in [ARTWORK.md](ARTWORK.md).
+The local castle image and twelve separate full-body WebP illustrations total about **4.6 MB**. Each solo asset is 264–426 KB, preserves alpha transparency and is shared by poster, dialogue and appreciation views. There is no group-image cropping. The game has an image-loading screen and a readable text-play fallback if artwork fails. System reduced motion and a manual effects toggle are respected; larger reading text, native buttons/dialogs, keyboard focus, and responsive layouts are supported. Details are in [ARTWORK.md](ARTWORK.md).
 
 ## Tests
 
@@ -66,7 +66,7 @@ npm run check
 npm test
 ```
 
-Twenty-two tests check 12 story cases and all 35 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 75 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
+Twenty-seven tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
 
 Optional browser tooling (not a game dependency):
 
@@ -78,7 +78,7 @@ npm run test:browser
 npm run test:experience
 ```
 
-`CHROMIUM_PATH` can select an installed Chromium executable. `GAME_TEST_URL` can select another port or a repository-subpath server; default is http://127.0.0.1:8000. The browser suite exercises all 60 story turns and 36 Endless cases (180 turns), all 35 templates before cycling, save/resume, replay reward protection, a returning visitor, old-save migration, mobile layouts, keyboard submission, settings/reset, loading failures, all five Team Talk cases using Choose (25 turns), typed/modal retries, and simulated microphone confirmation/error/fallback paths. The experience suite also checks the name screen, quest order, replay improvement with a preserved next-quest draft, running audio/microphone pause and resume, saved volume/mute settings, and compact mobile feedback. Real microphone hardware, provider recognition quality, physical speaker sound quality, and classroom outcomes require manual testing; no human playtesting results are claimed.
+`CHROMIUM_PATH` can select an installed Chromium executable. `GAME_TEST_URL` can select another port or a repository-subpath server; default is http://127.0.0.1:8000. The browser suite exercises all 60 story turns and 42 Endless cases (210 turns), all 41 templates before cycling, save/resume, replay reward protection, a returning visitor, old-save migration, mobile layouts, keyboard submission, settings/reset, loading failures, all five Team Talk cases using Choose (25 turns), typed/modal retries, and simulated microphone confirmation/error/fallback paths. The experience suite also checks the name screen, quest order, replay improvement with a preserved next-quest draft, running audio/microphone pause and resume, saved volume/mute settings, and compact mobile feedback. Real microphone hardware, provider recognition quality, physical speaker sound quality, and classroom outcomes require manual testing; no human playtesting results are claimed.
 
 ## Update the Vercel website
 
@@ -98,13 +98,13 @@ Relative module and asset paths still support a repository subpath. For Pages se
 
 The left menu defaults to Quest Replay: current/next main-story visitor, clickable completed/available quests and disabled locked quests. Player Profile, levels, counters, friendship and statistics are in a separate modal opened by the person icon. Accepted turns add to `learningPoints` when Continue is pressed, including replay and Team Talk. Best quest scores and one-time story XP stay separate. Old saves import approximately reconstructable points from stored averages; previously unrecorded replay points cannot be recovered.
 
-Original instrumental music runs at 128 BPM. Cinzel and Nunito fonts are bundled under their SIL Open Font Licenses in `assets/fonts`. Character artwork is generated original full-body transparent art in ten separate WebP files. The title poster, dialogue, quest path, journal, and appreciation screen share these files; there are no atlas crops. CSS handles idle and speaking animations; Settings and system reduced-motion preferences disable both. If artwork fails, a readable notice appears and text gameplay continues. The castle scene is unchanged.
+Original instrumental music runs at 128 BPM. Cinzel and Nunito fonts are bundled under their SIL Open Font Licenses in `assets/fonts`. Character artwork is generated original full-body transparent art in twelve separate WebP files. The title poster, dialogue, quest path, journal, and appreciation screen share these files; there are no atlas crops. CSS handles idle and speaking animations; Settings and system reduced-motion preferences disable both. If artwork fails, a readable notice appears and text gameplay continues. The castle scene is unchanged.
 
 To install individual transparent PNG/WebP files, add them to `assets/characters/` and set the corresponding `src` in `character-art.js`.  Optional `expressions` keys are `neutral`, `worried`, `thinking`, `happy`, and `surprised`; missing expressions use the same character's base portrait. The current story evaluator uses worried, thinking and happy; surprised is available for future authored scenes. No expression files are claimed to exist unless supplied. Do not use opaque image backgrounds or temporary placeholders.
 
 ### Movie poster and character appreciation
 
-The title assembles all ten individual files into a layered cinematic composition over the original castle. Each file is also used in the corresponding dialogue and reward screen. Rewards show the actual completed visitor, the escaped saved player name, character-specific thanks and problem-specific story details. Replay and Team Talk explicitly show zero XP/stars/friendship; Endless shows its own friendship increment. Animation respects Settings and system reduced motion. `appreciation.js` only supplies presentation text; scoring and saves are unchanged.
+The title assembles all twelve individual files into a layered cinematic composition over the original castle. Each file is also used in the corresponding dialogue and reward screen. Rewards show the actual completed visitor, the escaped saved player name, character-specific thanks and problem-specific story details. Replay and Team Talk explicitly show zero XP/stars/friendship; Endless shows its own friendship increment. Animation respects Settings and system reduced motion. `appreciation.js` only supplies presentation text; scoring and saves are unchanged.
 
 Run `CHROMIUM_PATH=/usr/bin/chromium GAME_TEST_URL=http://127.0.0.1:8021 npm run test:portraits` for image loading, distinct solo files, idle/reduced motion, image failure, and desktop/mobile checks. `npm run test:browser` covers the full gameplay regression.
 
@@ -121,3 +121,13 @@ Where Ancient Magic Meets Modern Technology. Original generated royal shield art
 ### Back navigation and guide presentation
 
 Gold Back navigates prior compatible screens in the current session while preserving nickname, draft, scores and quest progress. Stale quest contexts are skipped, and replay can return to the main story. Nickname uses the Royal Crest; both guides use the original pastel-liquid technology orb. Quest navigation appears during gameplay. Desktop portraits have safe head clearance; mobile sizing stays the same. Gold nameplates sit above the dialogue parchment. Run `npm run test:navigation-art` for desktop/laptop/mobile checks.
+
+### Twelve unique story visitors
+
+Story quest6 (same `frozen` ID) now belongs to Orion, an indigo owl archive courier, and quest9 (`crisis`) belongs to Ember, an emerald baby dragon festival messenger. Luna and Serena each own one story quest. Twelve original solo images appear in the poster and in-game; human poster scale is equal across rows with vertical offsets, while three creatures sit at the front. Scores, quest IDs/order, old-save rewards and friendships are preserved. The original 35 Endless templates remain, with six reviewed context variants for Orion/Ember (three each), giving 41 in the pool.
+
+### Royal completion certificate
+
+After the twelve unique story quests, the final reward leads to a royal certificate with real nickname, quest/star/XP/satisfaction totals and carried-forward points. The local canvas document includes school crest, guide orbs, miniature full cast and academy seal, with PNG and single-page PDF downloads. The PDF is an embedded high-resolution certificate image, not selectable text. Dates use Asia/Bangkok. Exports/cancel do not mutate saves.
+
+Continue conversation scrolls to the next character question, or the appreciation screen on completion. Quest Replay offers New journey after graduation; confirmation replaces the current story/rewards/Endless save while keeping nickname/settings, using the established quest order. Save the certificate before restarting. Run `npm run test:certificate` for scroll, real downloads, totals and restart checks on desktop/mobile.
