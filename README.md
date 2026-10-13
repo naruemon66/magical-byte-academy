@@ -66,7 +66,7 @@ npm run check
 npm test
 ```
 
-Thirty-one tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
+Thirty-two tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
 
 Optional browser tooling (not a game dependency):
 
@@ -136,4 +136,4 @@ Continue conversation scrolls to the next character question, or the appreciatio
 The title screen and game menu open the journey archive. Empty history shows only the enchanted-book artwork. Played journeys keep their own nickname, totals and status; each completed journey freezes its own certificate and issue date. Start New Journey/reset preserves these records, and later graduation creates another certificate. Archived PNG/PDF exports remain available after reload. History is stored locally under `arcanexus-journey-history-v1`, separate from the active save; clearing browser storage removes both. Existing saves are imported on resume, with the import date because original historical dates were not recorded. `npm run test:history` verifies English restart, empty history, archived exports, refresh, and completion of the second twelve-quest journey on desktop/mobile.
 
 ### Advisor appearance and compact menu
-Choose one of six existing illustrated appearances and an academy role on the name screen. Choices are cosmetic, stored with settings and preserved for a new journey. The profile icon/modal show the selected artwork. Academy Menu folds the menu buttons and music controls while leaving Quest Replay visible; its state survives reload. `npm run test:advisor-menu` covers six distinct images, selection/profile persistence, folding, music and mobile/desktop layout.
+Choose one of six original advisor appearances, separate from quest characters and an academy role on the name screen. Choices are cosmetic, stored with settings and preserved for a new journey. The profile icon/modal show the selected artwork. Academy Menu folds the menu buttons and music controls while leaving Quest Replay visible; its state survives reload. `npm run test:advisor-menu` covers six distinct images, selection/profile persistence, folding, music and mobile/desktop layout.
