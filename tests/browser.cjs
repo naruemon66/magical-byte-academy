@@ -10,7 +10,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
  try {
   const page=await browser.newPage({viewport:{width:1440,height:1000}});
   page.on('pageerror',e=>errors.push(e.message));
-  async function boot(p){await p.goto(url);await p.locator('#loading').waitFor({state:'hidden'});}
+  async function boot(p){await p.emulateMedia({reducedMotion:'reduce'});await p.goto(url);await p.locator('#loading').waitFor({state:'hidden'});}
   async function turn(p,example){await p.locator('#answer').fill(example);await p.locator('#submit').click();await p.locator('#next').click();}
   await boot(page);
   assert.equal(await page.locator('main button').count(),4);
@@ -20,7 +20,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   await page.screenshot({path:'test-results/v2-game.png',fullPage:true});
   await page.locator('#answer').fill('I enjoy strawberry cake.');await page.locator('#submit').click();assert.equal(await page.locator('#next').count(),0);
   await page.locator('#fallback').click();await page.locator('#learning .guide button').first().click();await page.locator('#clear').click();
-  for(let c=0;c<cases.length;c++){
+  for(let c=0;c<cases.length;c++){console.log(`Story ${c+1}/12`);
    for(let t=0;t<5;t++){
     await turn(page,cases[c].steps[t].example);
     if(c===0&&t===1){await page.reload();await page.locator('#loading').waitFor({state:'hidden'});await page.locator('#continue').click();assert.match(await page.locator('#goal').textContent(),/Academy-Guest/);}
@@ -36,7 +36,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   const replaySave=await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));const expectedReplay=structuredClone(storySave);expectedReplay.questResults[0].attempts++;expectedReplay.learningPoints+=500;expectedReplay.lastPointsEarned=100;assert.deepEqual(replaySave,expectedReplay);
   await page.locator('#next-case').click();await page.locator('#endless-start').click();
   const sequence=[];
-  for(let i=0;i<36;i++){
+  for(let i=0;i<36;i++){if(i%6===0)console.log(`Endless ${i+1}/36`);
    let saved=await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));
    const a=saved.endless.active,c=materialize(a.templateId,a.variant,a.difficulty);sequence.push(c.id);
    await page.locator('#greet').click();
