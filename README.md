@@ -4,7 +4,7 @@ An English-learning visual novel for **273411 — Communicative English for Comp
 
 ## What changed in V2
 
-- Cinematic fantasy chamber and ten original, distinct character portraits replace the pixel art and retro windows. The scene now uses **real-time original procedural 3D characters** with a skinned robe, bones, hair motion, and distinct costumes. These are simple stylized models, not cinematic sculpted GLB assets. The chamber and menu thumbnails remain generated illustrations. Emotion is conveyed by authored text; there is no facial animation or lip sync.
+- Cinematic fantasy chamber and ten original transparent, detailed illustrated character portraits. The scene uses **2D Cinematic Fantasy Visual Novel artwork**, with soft shadows, subtle glow, 8px CSS idle motion and a short speaking reaction. There are no toy-like models or WebGL requirements. Each character currently has one facial expression; mood affects motion, glow and authored dialogue, not facial morphing. Optional alternate expression images are supported.
 - The title offers only Start Game, Continue, How to Play, and Settings. A short guide-light introduction explains your role. During a case, the scene, dialogue, response, Hint, Submit, and feedback are the focus. Detailed progress lives in the journal.
 - The original nine five-turn story cases retain stable indices and technical content. Characters are aligned with V2 roles: Mix handles programming, Direx presents history, Felix handles networking, and Serena leads incident communication. Three new cases introduce Noah’s hardware issue, Aurora’s research backup, and Professor Ivy’s online meeting, creating **12 cases across four chapters**.
 - All **ten characters** have at least three authored Endless templates, distinct roles, speech styles, specialties, and relationship-dependent return dialogue.
@@ -94,8 +94,10 @@ Relative module and asset paths still support a repository subpath. For Pages se
 
 [GAME_DOCUMENT.md](GAME_DOCUMENT.md) contains the concise English assignment document. Fill in actual names, IDs, and contributions. OpenAI Codex assisted with authored code/dialogue/tests; OpenAI image generation produced the cinematic illustrations. Human review of English accuracy, pedagogical effectiveness, and technical advice remains necessary. No team contributions or user-study results are invented.
 
-### Fantasy interface and real-time models
+### Fantasy interface and illustrated characters
 
 The left menu contains the player profile, level, separate counters, music, and a connected quest path. Accepted turns add to `learningPoints` when Continue is pressed, including replay and Team Talk. Best quest scores and one-time story XP stay separate. Old saves import approximately reconstructable points from stored averages; previously unrecorded replay points cannot be recovered.
 
-Original instrumental music runs at 128 BPM. Three.js 0.180.0 is vendored locally under MIT (`assets/vendor/Three-LICENSE.txt`). Cinzel and Nunito fonts are bundled under their SIL Open Font Licenses in `assets/fonts`. No CDN or model download is required. WebGL is required for 3D; unavailable WebGL shows a message while text gameplay remains usable. Motion can be disabled in Settings and respects reduced-motion preferences.
+Original instrumental music runs at 128 BPM. Cinzel and Nunito fonts are bundled under their SIL Open Font Licenses in `assets/fonts`. Character artwork is generated original transparent art in a lossless WebP atlas. CSS handles idle and speaking animations; Settings and system reduced-motion preferences disable both. If artwork fails, a readable notice appears and text gameplay continues. The castle scene is unchanged.
+
+To install individual transparent PNG/WebP files, add them to `assets/characters/` and set the corresponding `src` in `character-art.js`. Set `aspect` to the image's width/height. Optional `expressions` keys are `neutral`, `worried`, `thinking`, `happy`, and `surprised`; missing expressions use the base portrait. The current story evaluator uses worried, thinking and happy; surprised is available for future authored scenes. No expression files are claimed to exist unless supplied. Do not use opaque image backgrounds or temporary placeholders.
