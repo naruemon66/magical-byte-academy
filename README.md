@@ -23,9 +23,21 @@ python3 -m http.server 8000
 
 Open the local server in a browser. Ctrl/Command + Enter submits. Every case can be completed by typing. Progress is stored on this browser and device; when storage is unavailable, the game warns you. It does not synchronize between devices or site origins. A Vercel preview URL has separate storage; V1 migration applies when V2 runs on the same origin as the existing save.
 
+## Player experience draft — seven improvements
+
+1. **Quests panel:** shows the current visitor, all story quests, completed/locked status, and the next visitor. Story order stays unchanged.
+2. **Best score and 1–5 stars:** each completed quest records the five-turn average, best score, latest attempt, and attempt count. Ratings are 1 star below 60, 2 at 60–74, 3 at 75–84, 4 at 85–94, and 5 at 95–100. The replay dropdown updates a personal best without reducing it or repeating XP/Magic Stars/friendship rewards. A paused later quest and its typed draft are preserved.
+3. **Advisor status:** your name, level, XP, best-score total out of 1200, and original story Magic Stars are visible above the scene. Level is `1 + floor(XP / 200)`; best-score improvements do not farm XP. Legacy Magic Stars remain a separate currency from the new 1–5 quest rating.
+4. **Name screen:** new players enter a nickname before the introduction. Existing unnamed saves are prompted once, retaining progress. Names remain local to the saved browser and are escaped when displayed.
+5. **Instrumental music:** an original 32-note magical bell-and-pad loop is synthesized locally using Web Audio in `music.js`, with no vocals, downloaded recordings, external services, or licensing dependency. It starts after user interaction, has mute and volume settings, and pauses before microphone recognition or when the tab is hidden. Browser support failures never block play. Automated checks validate the audio graph; device listening quality still needs manual checking.
+6. **Feedback cards:** a gem/sprout/shield badge, score orb, small learning cards, and expandable comparison panels replace the wall of feedback text. Details remain available through keyboard-accessible controls.
+7. **Partial credit and three model replies:** MCQ uses the same underlying analysis but allows 35-point progression for a relevant technical action with a minor modal/tone error. Professional, Polite, Direct, and Growing skill form four learning tiers; unsafe/insulting answers get 0 and still require a retry. Type/Speak retain analytical scoring and retry requirements, with three distinct accepted model replies per turn. “Improve this response” lets a learner revise a partial answer before continuing.
+
+Old V1/V2 saves infer best quest results from recorded case satisfaction and gain default music settings without resetting progress. Per-quest ratings use a different scale from the retained legacy reward currency.
+
 ## Unit 4: Polite and Professional Communication
 
-Type, Speak, and the new **Choose** mode share one text evaluator. Every turn offers four contrasting choices; positions vary. The strongest choice combines a safe, relevant technical action with correct functional language and a useful reason/follow-up. Direct and polite answers can still advance at lower scores; incorrect taught modal forms and unsafe instructions require revision. A polite word cannot make wrong advice professional.
+Type, Speak, and the new **Choose** mode share one text evaluator. Every turn offers four contrasting choices; positions vary. The strongest choice combines a safe, relevant technical action with correct functional language and a useful reason/follow-up. Direct and polite answers can still advance at lower scores; taught modal errors earn partial progression credit in Choose when the technical action is relevant; unsafe or insulting instructions still require revision. Type/Speak show analytical scores and require correction of detected taught errors. A polite word cannot make wrong advice professional.
 
 Practice `Could you please + base verb`, `Would you mind + -ing`, `May I suggest`, `I'd be happy to help`, `We could`, and `Shall we`. Several natural forms and contractions are accepted. Feedback identifies Direct, Polite, or Professional communication, explains selected grammar rules, and compares all choices after submission. It is a limited rule-based check, not a complete semantic or grammar assessment.
 
@@ -54,7 +66,7 @@ npm run check
 npm test
 ```
 
-Fifteen tests check 12 story cases and all 35 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 75 Endless completions across bag boundaries, difficulty/context variation, save corruption, and unavailable storage.
+Twenty-two tests check 12 story cases and all 35 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 75 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
 
 Optional browser tooling (not a game dependency):
 
@@ -63,9 +75,10 @@ npm install --no-save --package-lock=false playwright
 npx playwright install chromium
 # Keep the static server running in another terminal.
 npm run test:browser
+npm run test:experience
 ```
 
-`CHROMIUM_PATH` can select an installed Chromium executable. `GAME_TEST_URL` can select another port or a repository-subpath server; default is http://127.0.0.1:8000. The browser suite exercises all 60 story turns and 36 Endless cases (180 turns), all 35 templates before cycling, save/resume, replay reward protection, a returning visitor, old-save migration, mobile layouts, keyboard submission, settings/reset, loading failures, all five Team Talk cases using Choose (25 turns), typed/modal retries, and simulated microphone confirmation/error/fallback paths. Real microphone hardware, provider recognition quality, and classroom outcomes require manual testing; no human playtesting results are claimed.
+`CHROMIUM_PATH` can select an installed Chromium executable. `GAME_TEST_URL` can select another port or a repository-subpath server; default is http://127.0.0.1:8000. The browser suite exercises all 60 story turns and 36 Endless cases (180 turns), all 35 templates before cycling, save/resume, replay reward protection, a returning visitor, old-save migration, mobile layouts, keyboard submission, settings/reset, loading failures, all five Team Talk cases using Choose (25 turns), typed/modal retries, and simulated microphone confirmation/error/fallback paths. The experience suite also checks the name screen, quest order, replay improvement with a preserved next-quest draft, running audio/microphone pause and resume, saved volume/mute settings, and compact mobile feedback. Real microphone hardware, provider recognition quality, physical speaker sound quality, and classroom outcomes require manual testing; no human playtesting results are claimed.
 
 ## Update the Vercel website
 

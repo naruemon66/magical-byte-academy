@@ -16,7 +16,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   assert.equal(await page.locator('main button').count(),4);
   assert.equal(await page.locator('#toolbar').isVisible(),false);
   await page.screenshot({path:'test-results/v2-title.png',fullPage:true});
-  await page.locator('#new-game').click();await page.locator('#intro-next').click();await page.locator('#intro-next').click();await page.locator('#greet').click();
+  await page.locator('#new-game').click();await page.locator('#player-name').fill('Aster');await page.locator('#profile-form button').click();await page.locator('#intro-next').click();await page.locator('#intro-next').click();await page.locator('#greet').click();
   await page.screenshot({path:'test-results/v2-game.png',fullPage:true});
   await page.locator('#answer').fill('I enjoy strawberry cake.');await page.locator('#submit').click();assert.equal(await page.locator('#next').count(),0);
   await page.locator('#fallback').click();await page.locator('#learning .guide button').first().click();await page.locator('#clear').click();
@@ -33,7 +33,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   assert.equal(storySave.completed.length,12);assert.ok(storySave.achievements.includes('Chamber of Confidence'));
   await page.locator('#ending-journal').click();await page.getByText('Story tickets · practice completed cases',{exact:true}).click();await page.locator('[data-replay="0"]').click();await page.locator('#greet').click();
   for(const step of cases[0].steps)await turn(page,step.example);
-  assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1'))),storySave);
+  const replaySave=await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));const expectedReplay=structuredClone(storySave);expectedReplay.questResults[0].attempts++;assert.deepEqual(replaySave,expectedReplay);
   await page.locator('#next-case').click();await page.locator('#endless-start').click();
   const sequence=[];
   for(let i=0;i<36;i++){
@@ -62,11 +62,11 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   await boot(speech);
   await speech.locator('[data-title-action="help"]').click();assert.match(await speech.locator('#modal-content').textContent(),/How to Play/);await speech.locator('#close-modal').click();
   await speech.locator('[data-title-action="settings"]').click();await speech.locator('#motion').uncheck();await speech.locator('#large').check();assert.ok(await speech.locator('body').evaluate(e=>e.classList.contains('reduce-motion')));await speech.locator('#close-modal').click();
-  await speech.locator('#new-game').click();await speech.locator('#intro-next').click();await speech.locator('#intro-next').click();await speech.locator('#greet').click();assert.ok(await speech.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await speech.screenshot({path:'test-results/v2-mobile-game.png',fullPage:true});
+  await speech.locator('#new-game').click();await speech.locator('#player-name').fill('Mira');await speech.locator('#profile-form button').click();await speech.locator('#intro-next').click();await speech.locator('#intro-next').click();await speech.locator('#greet').click();assert.ok(await speech.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await speech.screenshot({path:'test-results/v2-mobile-game.png',fullPage:true});
   await speech.locator('#hint').click();assert.match(await speech.locator('#learning').textContent(),/Chamber Guide/);
   await speech.locator('#speak-mode').click();await speech.locator('#record').click();await speech.evaluate(()=>window.activeRecognition.onresult({results:[[{transcript:'Hello! I would be happy to help. Could you please tell me about the problem?'}]]}));
   await speech.locator('#submit').click();assert.equal(await speech.locator('#next').count(),0);await speech.locator('#record').click();await speech.locator('#submit').click();assert.equal(await speech.locator('#next').count(),0);
-  await speech.locator('#confirm-transcript').click();await speech.locator('#submit').click();assert.match(await speech.locator('#learning').textContent(),/100\/100/);await speech.locator('#next').click();
+  await speech.locator('#confirm-transcript').click();await speech.locator('#submit').click();assert.match(await speech.locator('#learning').textContent(),/100\s*\/100/);await speech.locator('#next').click();
   await speech.locator('#record').click();await speech.evaluate(()=>window.activeRecognition.onerror({error:'not-allowed'}));assert.match(await speech.locator('#speech-status').textContent(),/denied/);
   await speech.locator('#type-mode').click();await speech.locator('#answer').fill(cases[0].steps[1].example);await speech.locator('#answer').press('Control+Enter');await speech.locator('#next').click();
   await speech.locator('#speak-mode').click();await speech.evaluate(()=>{delete window.SpeechRecognition;delete window.webkitSpeechRecognition;});await speech.locator('#record').click();assert.match(await speech.locator('#speech-status').textContent(),/does not support/);await speech.locator('#type-mode').click();
@@ -76,18 +76,18 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
 
   // Four-option communication practice uses the same evaluator as typed and spoken text.
   const unit=await browser.newPage({viewport:{width:390,height:844}});unit.on('pageerror',e=>errors.push(e.message));
-  await boot(unit);await unit.locator('#new-game').click();await unit.locator('#intro-next').click();await unit.locator('#intro-next').click();await unit.locator('#greet').click();
+  await boot(unit);await unit.locator('#new-game').click();await unit.locator('#player-name').fill('Sky');await unit.locator('#profile-form button').click();await unit.locator('#intro-next').click();await unit.locator('#intro-next').click();await unit.locator('#greet').click();
   await unit.locator('#choice-mode').click();assert.equal(await unit.locator('[name="english-choice"]').count(),4);
   await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/Choose a response/);
   await unit.locator('[name="english-choice"][value="revise"]').check();await unit.locator('#submit').click();assert.equal(await unit.locator('#next').count(),0);assert.match(await unit.locator('#learning').textContent(),/password|private|protect/i);
-  await unit.locator('[name="english-choice"][value="professional"]').check();await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/100\/100/);await unit.locator('#next').click();
-  await unit.locator('#choice-mode').click();await unit.locator('[name="english-choice"][value="revise"]').check();await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/-ing/);assert.equal(await unit.locator('#next').count(),0);
-  await unit.locator('#type-mode').click();await unit.locator('#answer').fill('Would you mind checking Wi-Fi and airplane mode so that we can identify the problem?');await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/100\/100/);await unit.locator('#next').click();
+  await unit.locator('[name="english-choice"][value="professional"]').check();await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/100\s*\/100/);await unit.locator('#next').click();
+  await unit.locator('#choice-mode').click();await unit.locator('[name="english-choice"][value="revise"]').check();await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/-ing/);assert.ok(await unit.locator('#next').isVisible());assert.match(await unit.locator('#learning').textContent(),/35/);await unit.locator('#refine').click();
+  await unit.locator('#type-mode').click();await unit.locator('#answer').fill('Would you mind checking Wi-Fi and airplane mode so that we can identify the problem?');await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/100\s*\/100/);await unit.locator('#next').click();
   const beforeTeam=await unit.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));
   const {teamTemplates}=await import('../team-talk.js');
   for(const template of teamTemplates){
    await unit.locator('[data-action="journal"]').click();await unit.getByText('Unit 4 · Team Talk practice',{exact:true}).click();await unit.locator(`[data-team="${template.id}"]`).click();await unit.locator('#greet').click();
-   for(let t=0;t<5;t++){await unit.locator('#choice-mode').click();await unit.locator('[name="english-choice"][value="professional"]').check();await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/100\/100/);await unit.locator('#next').click();}
+   for(let t=0;t<5;t++){await unit.locator('#choice-mode').click();await unit.locator('[name="english-choice"][value="professional"]').check();await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/100\s*\/100/);await unit.locator('#next').click();}
    assert.match(await unit.locator('main').textContent(),/Practice complete/);await unit.locator('#next-case').click();
   }
   assert.deepEqual(await unit.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1'))),beforeTeam);
@@ -96,7 +96,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   // A real V1-format save migrates in the browser and resumes the original turn.
   const legacy=await browser.newPage();legacy.on('pageerror',e=>errors.push(e.message));
   await legacy.addInitScript(()=>{localStorage.setItem('magical-byte-academy-v1',JSON.stringify({version:1,caseIndex:0,stepIndex:2,completed:[],stars:0,xp:0,hearts:{},satisfaction:[],achievements:[],turnScores:[90,95],attempts:0,settings:{motion:false,largeText:false},draft:'Please select Academy-Guest.'}));});
-  await boot(legacy);await legacy.locator('#continue').click();assert.equal(await legacy.locator('#answer').inputValue(),'Please select Academy-Guest.');assert.match(await legacy.locator('#goal').textContent(),/Academy-Guest/);await legacy.close();
+  await boot(legacy);await legacy.locator('#continue').click();await legacy.locator('#player-name').fill('Legacy Advisor');await legacy.locator('#profile-form button').click();assert.equal(await legacy.locator('#answer').inputValue(),'Please select Academy-Guest.');assert.match(await legacy.locator('#goal').textContent(),/Academy-Guest/);await legacy.close();
   const failedArt=await browser.newPage();failedArt.on('pageerror',e=>errors.push(e.message));await failedArt.route('**/assets/*.webp',route=>route.abort());await boot(failedArt);assert.ok(await failedArt.locator('.asset-warning').isVisible());assert.ok(await failedArt.locator('#new-game').isVisible());await failedArt.close();
   assert.deepEqual(errors,[]);
   console.log('PASS: 12 story cases (60 turns), 36 endless cases (180 turns), 35 unique templates then safe repeat, all five Team Talk cases via four-choice responses (25 turns), typed/MCQ/simulated speech scoring, incorrect-modal retries, old-save migration, resume, replay protection, returning dialogue, keyboard, mobile, dialogs/reset, image-failure fallback; no browser exceptions.');
