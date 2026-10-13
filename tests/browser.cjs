@@ -86,7 +86,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   const beforeTeam=await unit.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));
   const {teamTemplates}=await import('../team-talk.js');
   for(const template of teamTemplates){
-   await unit.locator('[data-action="journal"]').click();await unit.getByText('Unit 4 · Team Talk practice',{exact:true}).click();await unit.locator(`[data-team="${template.id}"]`).click();await unit.locator('#greet').click();
+   await unit.locator('[data-action="journal"]').click();await unit.getByText('Team Talk practice',{exact:true}).click();await unit.locator(`[data-team="${template.id}"]`).click();await unit.locator('#greet').click();
    for(let t=0;t<5;t++){await unit.locator('#choice-mode').click();await unit.locator('[name="english-choice"][value="professional"]').check();await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/100\s*\/100/);await unit.locator('#next').click();}
    assert.match(await unit.locator('main').textContent(),/Practice complete/);await unit.locator('#next-case').click();
   }
