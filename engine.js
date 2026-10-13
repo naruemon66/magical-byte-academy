@@ -3,7 +3,7 @@ import {cases} from './story.js';
 import {templates,materialize} from './templates.js';
 export const SAVE_KEY='magical-byte-academy-v1'; // Keep the old key and migrate in place.
 const blankEndless=()=>({completed:0,totalScore:0,bestScore:0,cycles:0,seenTemplates:[],bag:[],lastId:null,lastCharacter:null,active:null,friendships:{}});
-export function freshState(){return {version:2,learningPoints:0,importedPoints:0,lastPointsEarned:0,playerName:'',questResults:Array(cases.length).fill(null),started:false,tutorialDone:false,mode:'story',caseIndex:0,stepIndex:0,completed:[],stars:0,xp:0,hearts:{},satisfaction:[],achievements:[],turnScores:[],attempts:0,settings:{motion:true,largeText:false,music:true,musicVolume:.25},draft:'',vocabulary:[],endless:blankEndless()};}
+export function freshState(){return {version:2,highestUnlockedQuest:0,selectedQuest:0,replayMode:false,replaySession:null,questMenuOpen:true,learningPoints:0,importedPoints:0,lastPointsEarned:0,playerName:'',questResults:Array(cases.length).fill(null),started:false,tutorialDone:false,mode:'story',caseIndex:0,stepIndex:0,completed:[],stars:0,xp:0,hearts:{},satisfaction:[],achievements:[],turnScores:[],attempts:0,settings:{motion:true,largeText:false,music:true,musicVolume:.25},draft:'',vocabulary:[],endless:blankEndless()};}
 const count=n=>Number.isSafeInteger(n)&&n>=0;
 const scores=a=>Array.isArray(a)&&a.every(n=>Number.isFinite(n)&&n>=0&&n<=100);
 const strings=a=>Array.isArray(a)&&a.every(n=>typeof n==='string');
@@ -17,6 +17,13 @@ export function loadState(storage){
  migrated.learningPoints=s.learningPoints??recordedPoints;
  migrated.importedPoints=Number.isFinite(s.importedPoints)&&s.importedPoints>=0?s.importedPoints:s.learningPoints===undefined?recordedPoints:0;
  migrated.lastPointsEarned=Number.isFinite(s.lastPointsEarned)&&s.lastPointsEarned>=0&&s.lastPointsEarned<=100?s.lastPointsEarned:0;
+ migrated.highestUnlockedQuest=Math.min(s.completed.length,cases.length-1);
+ migrated.selectedQuest=count(s.selectedQuest)&&s.selectedQuest<=migrated.highestUnlockedQuest?s.selectedQuest:Math.min(s.caseIndex,cases.length-1);
+ migrated.questMenuOpen=typeof s.questMenuOpen==='boolean'?s.questMenuOpen:true;
+ const replay=s.replaySession;
+ migrated.replayMode=!!s.replayMode&&s.completed.includes(migrated.selectedQuest)&&replay?.caseIndex===migrated.selectedQuest&&count(replay.stepIndex)&&replay.stepIndex<=4&&scores(replay.turnScores)&&replay.turnScores.length===replay.stepIndex&&typeof replay.draft==='string';
+ migrated.replaySession=migrated.replayMode?{caseIndex:replay.caseIndex,stepIndex:replay.stepIndex,turnScores:[...replay.turnScores],draft:replay.draft.slice(0,1200),attempts:count(replay.attempts)?replay.attempts:0}:null;
+ if(!migrated.replayMode)migrated.selectedQuest=Math.min(s.caseIndex,cases.length-1);
  migrated.playerName=typeof s.playerName==='string'?s.playerName.trim().slice(0,32):'';
  if(s.questResults!==undefined&&(!Array.isArray(s.questResults)||s.questResults.length!==cases.length||s.questResults.some((r,i)=>r!==null&&(!s.completed.includes(i)||!Number.isFinite(r.bestScore)||r.bestScore<0||r.bestScore>100||!Number.isFinite(r.lastScore)||r.lastScore<0||r.lastScore>100||!count(r.attempts)||r.attempts<1))))return null;
  migrated.questResults=s.questResults||base.questResults;
@@ -69,7 +76,7 @@ export function advance(state,score,totalCases=cases.length){
  const unlock=name=>{if(!next.achievements.includes(name))next.achievements.push(name);};
  if(index===0)unlock('First Light');if(next.completed.length===3)unlock('A Friendly Beginning');if(next.completed.length===6)unlock('Troubleshooting Team');if(stars===3)unlock('Kind Communicator');if(next.completed.length===9)unlock('Academy Guardian');if(next.completed.length===totalCases)unlock('Chamber of Confidence');
  next.vocabulary=[...new Set([...next.vocabulary,...(cases[index].vocabulary||[]).map(v=>v[0])])];
- next.caseIndex++;next.stepIndex=0;next.turnScores=[];
+ next.caseIndex++;next.highestUnlockedQuest=Math.min(next.caseIndex,cases.length-1);next.selectedQuest=next.highestUnlockedQuest;next.replayMode=false;next.replaySession=null;next.stepIndex=0;next.turnScores=[];
  return {state:next,completed:true,reward:{stars,xp:100+stars*25,satisfaction,rating:questRating(satisfaction),char,index}};
 }
 export function startEndless(state,rng=Math.random){
@@ -118,3 +125,9 @@ export function earnPoints(state,score){
  if(!Number.isFinite(score)||score<0||score>100)throw new Error('Invalid earned score');
  const next=structuredClone(state);next.learningPoints=(next.learningPoints||0)+score;next.lastPointsEarned=score;return next;
 }
+
+export function questAccess(state,index){if(!Number.isInteger(index)||index<0||index>=cases.length)return 'Locked';if(state.completed.includes(index))return 'Completed';return index===state.caseIndex?'Available':'Locked';}
+export function selectStoryQuest(state,index){
+ if(questAccess(state,index)==='Locked')throw new Error('Quest is locked');const next=structuredClone(state);next.selectedQuest=index;next.replayMode=next.completed.includes(index);next.replaySession=next.replayMode?{caseIndex:index,stepIndex:0,turnScores:[],draft:'',attempts:0}:null;return next;
+}
+export function returnToStory(state){const next=structuredClone(state);next.selectedQuest=Math.min(next.caseIndex,cases.length-1);next.replayMode=false;next.replaySession=null;return next;}

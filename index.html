@@ -4,7 +4,7 @@
  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
  <meta name="theme-color" content="#09152e"><meta name="description" content="Become the Magical IT Advisor in a cinematic fantasy English-learning adventure. Ten characters, story cases, and endless support requests.">
  <title>Magical Byte Academy · Cinematic Fantasy Edition</title>
- <link rel="preload" href="./assets/chamber.webp" as="image"><link rel="preload" href="./assets/cast.webp" as="image">
+ <link rel="preload" href="./assets/chamber.webp" as="image"><link rel="preload" href="./assets/characters/luna.webp" as="image">
  <link rel="preload" href="./assets/fonts/cinzel.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./fantasy.css">
 </head>
 <body>
@@ -12,8 +12,8 @@
  <header><div class="brand"><span class="sigil" aria-hidden="true">✧</span><span>MAGICAL BYTE<small>ACADEMY</small></span></div></header>
  <div id="game-layout" class="game-layout">
  <aside id="game-sidebar" aria-label="Advisor menu and quest path" hidden>
- <nav id="toolbar" aria-label="Game menu" hidden><button data-action="journal">✦ Journal</button><button data-action="settings">⚙ Settings</button><button data-action="home">⌂ Save & title</button></nav>
- <section id="player-status" aria-label="Advisor level and quest progress" hidden></section>
+ <nav id="toolbar" aria-label="Game menu" hidden><button id="player-profile" data-action="player-profile" aria-label="Open Player Profile" title="Player Profile"><span class="profile-icon" aria-hidden="true"><i></i></span></button><button data-action="journal">✦ Journal</button><button data-action="settings">⚙ Settings</button><button data-action="home">⌂ Save & title</button></nav>
+ <section id="player-status" aria-label="Quest Replay and main story progress" hidden></section>
  </aside>
  <main id="app" aria-label="Magical Byte Academy game"></main>
  </div>
