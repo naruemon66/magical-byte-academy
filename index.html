@@ -2,23 +2,34 @@
 <html lang="en">
 <head>
  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
- <meta name="theme-color" content="#09152e"><meta name="description" content="Become the Magical IT Advisor in a cinematic fantasy English-learning adventure. Ten characters, story cases, and endless support requests.">
- <title>Magical Byte Academy · Cinematic Fantasy Edition</title>
+ <meta name="theme-color" content="#09152e"><meta name="description" content="Enter ARCANEXUS ACADEMY: The Enchanted Help Desk. Where Ancient Magic Meets Modern Technology. Become a Magical IT Advisor in a cinematic fantasy English-learning adventure.">
+ <title>ARCANEXUS ACADEMY · The Enchanted Help Desk</title>
  <link rel="preload" href="./assets/chamber.webp" as="image"><link rel="preload" href="./assets/characters/luna.webp" as="image">
  <link rel="preload" href="./assets/fonts/cinzel.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./fantasy.css">
+ <meta property="og:title" content="ARCANEXUS ACADEMY · The Enchanted Help Desk">
+ <meta property="og:description" content="Where Ancient Magic Meets Modern Technology. A cinematic fantasy English-learning visual novel.">
+ <meta property="og:type" content="website">
+ <meta name="application-name" content="ARCANEXUS ACADEMY">
+ <meta name="apple-mobile-web-app-title" content="ARCANEXUS ACADEMY">
+ <meta name="twitter:card" content="summary">
+ <meta name="twitter:title" content="ARCANEXUS ACADEMY · The Enchanted Help Desk">
+ <meta name="twitter:description" content="Where Ancient Magic Meets Modern Technology.">
+ <link rel="icon" type="image/png" sizes="64x64" href="./assets/branding/favicon.png">
+ <link rel="apple-touch-icon" sizes="180x180" href="./assets/branding/apple-touch-icon.png">
+ <link rel="preload" as="image" href="./assets/branding/royal-crest.webp">
 </head>
 <body>
  <div class="ambient" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
- <header><div class="brand"><span class="sigil" aria-hidden="true">✧</span><span>MAGICAL BYTE<small>ACADEMY</small></span></div></header>
+ <header><div class="brand"><img class="brand-crest" src="./assets/branding/crest-small.webp" alt="Arcanexus Royal Crest" width="56" height="56"><span>ARCANEXUS<small>ACADEMY</small></span></div></header>
  <div id="game-layout" class="game-layout">
  <aside id="game-sidebar" aria-label="Advisor menu and quest path" hidden>
  <nav id="toolbar" aria-label="Game menu" hidden><button id="player-profile" data-action="player-profile" aria-label="Open Player Profile" title="Player Profile"><span class="profile-icon" aria-hidden="true"><i></i></span></button><button data-action="journal">✦ Journal</button><button data-action="settings">⚙ Settings</button><button data-action="home">⌂ Save & title</button></nav>
  <section id="player-status" aria-label="Quest Replay and main story progress" hidden></section>
  </aside>
- <main id="app" aria-label="Magical Byte Academy game"></main>
+ <main id="app" aria-label="ARCANEXUS ACADEMY game"></main>
  </div>
- <div id="loading" role="status"><div class="loader-orb" aria-hidden="true"></div><h1>Opening the chamber</h1><p id="loading-status">Gathering light and portraits…</p></div>
+ <div id="loading" role="status"><img class="loading-crest" src="./assets/branding/royal-crest.webp" alt="Arcanexus Royal Crest" width="180" height="180"><h1>ARCANEXUS ACADEMY</h1><p>The Enchanted Help Desk</p><p id="loading-status">Gathering light and portraits…</p></div>
  <dialog id="modal"><button id="close-modal" aria-label="Close dialog">×</button><div id="modal-content"></div></dialog>
- <footer>273411 · English for Computer and Information Technology <span>Cinematic Fantasy Visual Novel · Magical Academy</span></footer>
+ <footer>273411 · English for Computer and Information Technology <span>ARCANEXUS ACADEMY · The Enchanted Help Desk</span></footer>
  <script type="module" src="./app.js"></script>
 </body></html>

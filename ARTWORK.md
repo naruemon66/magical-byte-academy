@@ -17,3 +17,7 @@ There are no placeholder or wrong-character fallbacks. Missing artwork produces 
 ## Verification
 
 Image metadata confirms alpha channels for all ten files. Browser tests verify actual file loading and identity in both desktop and mobile, no overflow/canvas, idle and reduced motion, missing-image notices, ten-image poster composition and personalized appreciation. Full gameplay regression protects English response scoring, MCQ, simulated speech, rewards, saves and Endless. Human review remains needed for course delivery and real-device microphone behavior.
+
+## The Arcanexus Royal Crest
+
+Original generated transparent high fantasy shield, with royal blue/amethyst enamel, gold engraving, sapphire crown jewel, luminous spellbook conjuring AI chip/circuits/holographic displays and a named ribbon. `assets/branding/royal-crest.webp` is the large illustration (640px); a separately generated simplified text-free variant is encoded as `crest-small.webp` (192px), `favicon.png` (64px) and `apple-touch-icon.png` (180px). Full and mini PNG source outputs are retained in the cloud generated-images folder; shipped WebP/PNG files are ready to deploy. Total added branding assets are approximately 250 KB. No character, castle, or gameplay files are replaced for this branding change.

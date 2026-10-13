@@ -1,6 +1,6 @@
-# คำสั่งปรับปรุงเกม Magical Byte Academy — Cinematic 3D Fantasy Edition
+# คำสั่งปรับปรุงเกม ARCANEXUS ACADEMY — Cinematic 3D Fantasy Edition
 
-กรุณาอ่าน GAME_DESIGN.md และตรวจสอบโค้ดเกม Magical Byte Academy ที่มีอยู่ทั้งหมดก่อนเริ่มทำงาน
+กรุณาอ่าน GAME_DESIGN.md และตรวจสอบโค้ดเกม ARCANEXUS ACADEMY ที่มีอยู่ทั้งหมดก่อนเริ่มทำงาน
 
 **งานนี้เป็นการปรับปรุงเกมเดิม ไม่ใช่การสร้างโปรเจกต์ใหม่** ต้องรักษาระบบที่ใช้งานได้แล้ว ได้แก่ บทสนทนา การพิมพ์ตอบภาษาอังกฤษ ไมโครโฟน การตรวจคำตอบ Feedback คะแนน รางวัล ความคืบหน้า และการบันทึกข้อมูล
 
@@ -13,7 +13,7 @@
 ใช้แนวภาพดังนี้:
 - ภาพแฟนตาซี 3D คุณภาพสูงคล้ายภาพยนตร์แอนิเมชันแฟนตาซีหรือหนังสั้น AI
 - โรงเรียนเวทมนตร์ขนาดใหญ่ มีปราสาท หอคอย ห้องสมุดเวทมนตร์ โถงทางเดิน กระจกสี เทียนลอยได้ และแสงเวทมนตร์
-- บรรยากาศได้รับแรงบันดาลใจจากโรงเรียนพ่อมดแม่มดในนิยายแฟนตาซี แต่ต้องออกแบบโลกและตัวละครเป็นเอกลักษณ์ของ Magical Byte Academy ไม่ลอกเลียนทรัพย์สินทางปัญญาจาก Harry Potter
+- บรรยากาศได้รับแรงบันดาลใจจากโรงเรียนพ่อมดแม่มดในนิยายแฟนตาซี แต่ต้องออกแบบโลกและตัวละครเป็นเอกลักษณ์ของ ARCANEXUS ACADEMY ไม่ลอกเลียนทรัพย์สินทางปัญญาจาก Harry Potter
 - ตัวละครเป็นมนุษย์ 3D สไตล์ Stylized Cinematic Fantasy มีใบหน้าแสดงอารมณ์ชัดเจน เสื้อคลุมเวทมนตร์ และรายละเอียดเครื่องแต่งกาย
 - โทนสีสดใสขึ้น ได้แก่ Royal Blue, Amethyst Purple, Emerald Green, Ruby Red, Golden Amber และ Magical Pink
 - ใช้แสงแบบ Cinematic Lighting, Bloom, Glowing Particles, Soft Shadows และ Magical Atmosphere
@@ -28,7 +28,7 @@
 
 ## 2. ปรับบทบาทของผู้เล่นและสถานที่หลัก
 
-ผู้เล่นรับบทเป็น Magical IT Advisor หรืออาจารย์ฝ่ายสนับสนุนเทคโนโลยีเวทมนตร์ ประจำ Magical Byte Academy
+ผู้เล่นรับบทเป็น Magical IT Advisor หรืออาจารย์ฝ่ายสนับสนุนเทคโนโลยีเวทมนตร์ ประจำ ARCANEXUS ACADEMY
 
 ผู้เล่นทำงานอยู่ในห้อง Magical Technology Support Chamber ซึ่งเป็นห้องทำงานภายในปราสาทเวทมนตร์
 
@@ -252,7 +252,7 @@ Feedback ต้องอธิบายว่าทำไมคำตอบจ�
 
 เมื่อทำเสร็จ ให้สรุปเป็นภาษาไทยว่าปรับอะไรแล้ว ทดสอบอะไรผ่านแล้ว มีข้อจำกัดอะไร และต้องทำอะไรต่อเพื่อเผยแพร่บน Vercel
 
-เริ่มปรับปรุงเกม Magical Byte Academy จากโค้ดเดิมได้ทันที
+เริ่มปรับปรุงเกม ARCANEXUS ACADEMY จากโค้ดเดิมได้ทันที
 
 ## 12. ข้อกำหนดเพิ่มเติม — Unit 4: Polite and Professional Team Talk
 
@@ -375,3 +375,12 @@ Feedback ต้องอธิบายว่าทำไมคำตอบจ�
 - Player Profile ย้ายไปหน้าต่างแยก เปิดจากไอคอนรูปคนในแถบเมนู แสดงชื่อ Level XP Stars คะแนนสะสม Friendship และสถิติ ปิดกลับเกมโดยไม่เปลี่ยนเควสต์ ไม่มีการ์ดโปรไฟล์ใหญ่ค้างใน Sidebar
 - LocalStorage คง save key/version เดิม และย้ายข้อมูลเก่าโดยคำนวณ highestUnlockedQuest จาก completed ไม่ลดเควสต์ที่ปลดล็อก บันทึก selected/replaySession และสถานะเปิดพับแผงด้วย เควสต์หลักและ draft เก็บแยกจาก Replay
 - ทดสอบ 8 ขั้นที่ผู้ใช้กำหนดทั้งสองขนาดหน้าจอ รวมคืนเควสต์หลักทันทีหลัง Replay, Q3 Locked ก่อนจบ Q2, รีเฟรช/Continue, เปิดปิด Profile, เก็บ draft และป้องกันรางวัลซ้ำ พร้อมทดสอบทุกเควสต์ใน unit tests
+
+## 18. ARCANEXUS ACADEMY — The Arcanexus Royal Crest
+
+ชื่อใหม่ทุกส่วน UI และ Metadata: **ARCANEXUS ACADEMY**; Subtitle: **The Enchanted Help Desk**; คำขวัญ: **Where Ancient Magic Meets Modern Technology**. ชื่อผสาน Arcane (ศาสตร์เวทมนตร์) กับ Nexus (การเชื่อมต่อระบบ/เครือข่าย) ไม่เปลี่ยนชื่อ Repository, URL หรือ LocalStorage key เพื่อรักษา Deploy และเซฟเดิม
+
+- ใช้ตราโล่ Royal Blue/Deep Amethyst ขอบทองแกะสลัก หนังสือเรืองแสงเสกชิป AI วงจร/เครือข่ายดิจิทัล โฮโลแกรมและรูน อัญมณีไพลิน/ม่วง ปีกทองสมมาตรและประกาย Cyan/Violet/Gold พร้อมริบบิ้นชื่อเต็ม เป็นภาพต้นฉบับใหม่ ไม่ใช่ Emoji วงกลม หรือโล่ไอคอนแบน
+- ภาพโปร่งใส `assets/branding/royal-crest.webp` สำหรับหน้าแรกเหนือชื่อและ Loading; `crest-small.webp` ย่อไร้ข้อความสำหรับ Header; `favicon.png` 64px และ `apple-touch-icon.png` 180px เป็นโล่ไร้ข้อความขนาดเล็ก
+- ชื่อทองมี glow พอดี Subtitle/คำขวัญเด่นรอง โลโก้ object-fit:contain และสัดส่วนจัตุรัสคงที่ทั้ง Desktop/Mobile Loading ลอยช้าเมื่อเปิด motion
+- คงปราสาท ตัวละคร เกม และระบบทั้งหมด ตรวจชื่อเก่าทั้งข้อความ/aria-label/alt/Browser Title/Metadata ทดสอบเซฟเดิมต่อเควสต์ได้ และ build/check/tests ผ่าน ไม่มีภาพโลโก้ค้างที่ต้องเติมภายหลัง

@@ -1,4 +1,4 @@
-# Magical Byte Academy — The Enchanted Help Desk
+# ARCANEXUS ACADEMY — The Enchanted Help Desk
 
 **Edition:** Cinematic Fantasy V2 · **Course:** 273411, Communicative English for Computer and Information Technology
 
