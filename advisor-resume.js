@@ -1,15 +1,16 @@
 import {playerLevel} from './engine.js';
 import {advisorAvatar} from './advisor-avatars.js';
 import {cases,characters} from './story.js';
-const load=src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(Error('Advisor artwork could not load.'));img.src=src;});
+const load=src=>new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(Error('Resume artwork could not load.'));img.src=src;});
 export async function createAdvisorResume(s){
  if(!s.advisorAvatar)throw Error('The advisor portrait was not recorded for this older journey. New graduations include a resume.');
- await document.fonts.ready;const avatar=advisorAvatar(s.advisorAvatar),art=await load(avatar.src),canvas=document.createElement('canvas');canvas.width=1600;canvas.height=1120;canvas.setAttribute('role','img');canvas.setAttribute('aria-label',`Advisor resume for ${s.playerName}: ${s.completed.length} quests, ${s.stars} stars, ${s.xp} XP`);const c=canvas.getContext('2d');
+ await document.fonts.ready;const avatar=advisorAvatar(s.advisorAvatar),[art,crest]=await Promise.all([load(avatar.src),load('./assets/branding/royal-crest.webp')]),canvas=document.createElement('canvas');canvas.width=1600;canvas.height=1120;canvas.setAttribute('role','img');canvas.setAttribute('aria-label',`Advisor resume for ${s.playerName}: ${s.completed.length} quests, ${s.stars} stars, ${s.xp} XP`);const c=canvas.getContext('2d');
  c.fillStyle='#101d34';c.fillRect(0,0,1600,1120);c.strokeStyle='#d0ad6a';c.lineWidth=4;c.strokeRect(24,24,1552,1072);const gradient=c.createLinearGradient(0,0,600,1120);gradient.addColorStop(0,'#493860');gradient.addColorStop(1,'#14243b');c.fillStyle=gradient;c.fillRect(42,42,530,1036);
  const scale=Math.min(510/art.width,900/art.height);c.drawImage(art,52+(510-art.width*scale)/2,110,art.width*scale,art.height*scale);
+ const crestScale=Math.min(150/crest.width,180/crest.height);c.drawImage(crest,1400+(150-crest.width*crestScale)/2,55,crest.width*crestScale,crest.height*crestScale);
  const text=(t,x,y,size=22,color='#eee0c1',font='AcademyText')=>{c.fillStyle=color;c.font=`${size}px ${font}, Georgia, serif`;c.fillText(String(t),x,y);};
  text('ARCANEXUS ACADEMY',70,80,24,'#efcd85','AcademyDisplay');text(avatar.name,80,965,28,'#f9d48e','AcademyDisplay');text(avatar.role,80,1008,23);
- text('MAGICAL IT ADVISOR · JOURNEY RECORD',630,92,23,'#d9bb7d','AcademyDisplay');let size=54;c.font=`${size}px AcademyDisplay`;while(c.measureText(s.playerName).width>890&&size>24)c.font=`${--size}px AcademyDisplay`;text(s.playerName,630,171,size,'#ffe1a1','AcademyDisplay');text('The Enchanted Help Desk',630,220,26);
+ text('MAGICAL IT ADVISOR · JOURNEY RECORD',630,92,23,'#d9bb7d','AcademyDisplay');let size=54;c.font=`${size}px AcademyDisplay`;while(c.measureText(s.playerName).width>740&&size>24)c.font=`${--size}px AcademyDisplay`;text(s.playerName,630,171,size,'#ffe1a1','AcademyDisplay');text('The Enchanted Help Desk',630,220,26);
  const avg=s.satisfaction.length?Math.round(s.satisfaction.reduce((a,b)=>a+b,0)/s.satisfaction.length):0;
  [['Story quests',`${s.completed.length}/12`],['Magic Stars',`${s.stars}/36`],['Experience',`${s.xp} XP`],['Satisfaction',`${avg}%`]].forEach(([label,value],i)=>{const x=630+i*226;c.fillStyle='#eadcc5';c.fillRect(x,268,210,122);text(label,x+16,305,18,'#533b6d');text(value,x+16,356,31,'#433064','AcademyDisplay');});
  text(`Total points: ${s.learningPoints.toLocaleString()}   ·   Level ${playerLevel(s)}`,630,445,25,'#f4d493');const friendship=Object.values(s.hearts||{}).reduce((a,b)=>a+b,0);text(`Friendship: ${friendship}   ·   Vocabulary: ${(s.vocabulary||[]).length} terms`,630,490,22);
