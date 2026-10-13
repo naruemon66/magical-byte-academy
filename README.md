@@ -117,3 +117,7 @@ Run `npm run test:quests` for the requested eight-step progression/profile seque
 ### ARCANEXUS ACADEMY branding
 
 Where Ancient Magic Meets Modern Technology. Original generated royal shield art is bundled in `assets/branding/`: large transparent `royal-crest.webp`, text-free `crest-small.webp`, `favicon.png` and `apple-touch-icon.png`. The full crest includes the named gold ribbon; the mini version removes lettering for small sizes. Homepage, header, loading screen, browser title and metadata use the new name. The repository/URL and legacy LocalStorage key remain unchanged to preserve deployment and saves. No extra image files are needed.
+
+### Back navigation and guide presentation
+
+Gold Back navigates prior compatible screens in the current session while preserving nickname, draft, scores and quest progress. Stale quest contexts are skipped, and replay can return to the main story. Nickname uses the Royal Crest; both guides use the original pastel-liquid technology orb. Quest navigation appears during gameplay. Desktop portraits have safe head clearance; mobile sizing stays the same. Gold nameplates sit above the dialogue parchment. Run `npm run test:navigation-art` for desktop/laptop/mobile checks.
