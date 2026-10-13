@@ -105,7 +105,8 @@ export function advanceEndless(state,score){
 }
 
 export function questRating(score){return score>=95?5:score>=85?4:score>=75?3:score>=60?2:1;}
-export function playerProgress(state){const level=1+Math.floor(state.xp/200);return {level,learningPoints:state.learningPoints||0,lastPointsEarned:state.lastPointsEarned||0,xpInLevel:state.xp%200,xpToNext:200-state.xp%200,totalScore:state.questResults.reduce((sum,r)=>sum+(r?.bestScore||0),0),maxScore:cases.length*100};}
+export function playerLevel(state){return 1+(state.completed?.length||0);}
+export function playerProgress(state){const level=playerLevel(state);return {level,storyComplete:state.completed.length===cases.length,levelProgress:state.completed.length===cases.length?5:state.stepIndex,learningPoints:state.learningPoints||0,lastPointsEarned:state.lastPointsEarned||0,totalScore:state.questResults.reduce((sum,r)=>sum+(r?.bestScore||0),0),maxScore:cases.length*100};}
 export function improveQuest(state,index,score){
  if(!state.completed.includes(index)||!Number.isFinite(score)||score<0||score>100)throw new Error('Invalid completed-quest replay');
  const next=structuredClone(state),old=next.questResults[index]||{bestScore:next.satisfaction[index]||0,lastScore:0,attempts:1};

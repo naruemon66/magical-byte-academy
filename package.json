@@ -22,6 +22,7 @@
     "test:resume": "node tests/resume.cjs",
     "test:music-arrangements": "node tests/music-arrangements.cjs",
     "test:landing": "node tests/landing.cjs",
-    "test:academy-story": "node tests/academy-story.cjs"
+    "test:academy-story": "node tests/academy-story.cjs",
+    "test:quest-levels": "node tests/quest-levels.cjs"
   }
 }

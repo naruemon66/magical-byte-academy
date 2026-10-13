@@ -66,7 +66,7 @@ npm run check
 npm test
 ```
 
-Thirty-three tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
+Thirty-four tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
 
 Optional browser tooling (not a game dependency):
 
@@ -147,3 +147,5 @@ The six selectable songs now use individually authored arrangements and differen
 Landing now has only Start Game and How to Play. Start enters name/advisor selection first, with saved-journey continuation offered afterward. Audio starts attempting playback at boot; browser autoplay policy may require the first click/tap/key before sound. `npm run test:landing` verifies both fresh/saved entry and preserved progress/draft.
 
 Academy Story replaces the former Save & title sidebar button. It opens a full lore page with original exterior/laboratory art and returns to the same conversation, including draft and accepted-choice feedback. `npm run test:academy-story` verifies both viewport layouts, asset loading and save/conversation preservation.
+
+Player level now equals 1 + uniquely completed story quests, independently of XP. Luna completion gives Level 2 even at 175 XP; replay does not add levels. Existing saves update automatically from their completed quest list. `npm run test:quest-levels` checks real completion, profile progress, reload and replay on desktop/mobile.
