@@ -410,3 +410,6 @@ Feedback ต้องอธิบายว่าทำไมคำตอบจ�
 
 ## 22. Scenario-focused feedback
 Feedback shows why the current visitor requested help, the current task, and the authored outcome of an accepted reply. Unaccepted replies show the remaining issue without claiming a repair. Remove the Unit 4 theory, score-rule explanation, language lecture and generic choice comparison panels from answer feedback. Retain scoring, partial credit, retries, three optional reply examples, and Continue auto-scroll. Team Talk remains available without a course-unit label in the player UI.
+
+## 23. Arcane feedback icons
+Replace standard emoji in answer feedback with transparent fantasy artwork. Score tiers display the enchanted guide orb with tier-specific hue/glow/framing; safety displays the academy crest. Explicit tier names and numeric scores remain, so color alone is not required. The three reply examples use an original enchanted grimoire icon. Keep scenario-only feedback; do not restore the removed language/score theory panels.

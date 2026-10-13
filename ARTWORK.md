@@ -29,3 +29,6 @@ Original generated transparent high fantasy shield, with royal blue/amethyst ena
 ## Orion and Ember
 
 Two additional original transparent solo illustrations: Orion the indigo/brown owl with cyan eyes, bronze glasses and crescent pendant; Ember the emerald/teal baby dragon with golden belly, violet-pink wings and amber eyes. Both full bodies include talons/paws/tail and are separate generated files, encoded WebP90/alpha100 without cropping. `assets/characters/orion.webp` and `ember.webp` share the cast pipeline. The poster now has12 visitors: nine humans at equal scale across rows (height varied through placement only) and three smaller creatures. Historical10-person descriptions above describe earlier versions.
+
+### Enchanted feedback grimoire
+`assets/branding/enchanted-grimoire.webp` is an original AI-generated transparent enchanted book with gold/amethyst covers and cyan holographic rune light. Encoded at 192px for compact feedback icons; no franchise reference or sprite cropping. Score-tier icons reuse the existing guide orb with CSS hue/frame differences; the safety tier uses the academy crest. Feedback icons are decorative, with tier text and numeric scores retained for accessibility.
