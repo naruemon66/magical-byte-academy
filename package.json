@@ -15,6 +15,7 @@
     "test:branding": "node tests/branding.cjs",
     "test:navigation-art": "node tests/navigation-art.cjs",
     "test:certificate": "node tests/certificate-scroll.cjs",
-    "test:new-visitors": "node tests/new-visitors.cjs"
+    "test:new-visitors": "node tests/new-visitors.cjs",
+    "test:feedback": "node tests/scenario-feedback.cjs"
   }
 }

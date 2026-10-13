@@ -407,3 +407,6 @@ Feedback ต้องอธิบายว่าทำไมคำตอบจ�
 - จบ12เควสต์เข้าสู่หน้า Royal Commendation ต่อจากรางวัลสุดท้าย ประกาศนียบัตรใช้ชื่อจริงในเกม จำนวนเควสต์ Magic Stars/36 XP satisfaction และคะแนนสะสม มีRoyal Crest ลูกแก้วเวทมนตร์ กรอบทอง ภาพกลุ่ม12ตัวละครขนาดเล็กมุมซ้ายล่าง และตราประทับ/ชื่อโรงเรียนมุมขวาล่าง
 - ดาวน์โหลด PNG1600×1120 และPDFหน้าเดียวได้จริงในเบราว์เซอร์ โดยสร้างจากข้อมูลเซฟและภาพท้องถิ่น ไม่มี API/ไลบรารีภายนอกใหม่ วันที่แสดงเขตAsia/Bangkok การดาวน์โหลดไม่แก้คะแนนหรือเซฟ
 - Quest Replay แสดงปุ่มเริ่มใหม่เมื่อจบทั้ง12เท่านั้น มีหน้าต่างยืนยันให้บันทึกประกาศนียบัตรก่อนเริ่มใหม่ ใช้flowเริ่มเกมเดิมซึ่งแทนความคืบหน้า XP ดาวและEndlessรอบปัจจุบัน แต่เก็บชื่อและsettings รอบใหม่ใช้ลำดับเควสต์เดิม (การสุ่มเป็นตัวเลือกที่ผู้ใช้อนุญาต ไม่ได้บังคับ)
+
+## 22. Scenario-focused feedback
+Feedback shows why the current visitor requested help, the current task, and the authored outcome of an accepted reply. Unaccepted replies show the remaining issue without claiming a repair. Remove the Unit 4 theory, score-rule explanation, language lecture and generic choice comparison panels from answer feedback. Retain scoring, partial credit, retries, three optional reply examples, and Continue auto-scroll. Team Talk remains available without a course-unit label in the player UI.
