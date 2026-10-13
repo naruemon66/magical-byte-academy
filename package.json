@@ -19,6 +19,7 @@
     "test:feedback": "node tests/scenario-feedback.cjs",
     "test:history": "node tests/history-browser.cjs",
     "test:advisor-menu": "node tests/advisor-menu.cjs",
-    "test:resume": "node tests/resume.cjs"
+    "test:resume": "node tests/resume.cjs",
+    "test:music-arrangements": "node tests/music-arrangements.cjs"
   }
 }

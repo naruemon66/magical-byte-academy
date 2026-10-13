@@ -436,3 +436,6 @@ Graduation adds an Advisor Resume, a local PNG/PDF learning record with a large 
 
 ## 29. Vertical profile level crest
 Place a two-line Level crest above the advisor portrait (label then large gold number). Separate XP and its progress meter on the statistics side. Replace plain light counter rectangles with amethyst/navy frames, engraved gold corner details and high-contrast gold values/lavender explanations. Preserve all stat values, selection, certificate and resume behavior.
+
+## 30. Six clearly differentiated musical arrangements
+Replace transposed shared motifs in the six selectable songs with individually authored melody phrases, rests, rhythm patterns, accompaniment and synthesized instrument families: Academy harp/strings, Luna airy flute/chimes, Mix staccato clockwork syncopation, Mochi pizzicato in three-beat meter, Ember brass/marching percussion, and Aurora crystal-bell arpeggios. Tempos remain upbeat (132–154 BPM). Playlist descriptions identify the sound character. These are synthesized approximations rather than sampled acoustic instruments. Preserve manual selection, volume/mute, microphone ducking and hidden-tab pause. Offline browser rendering creates unclipped PCM preview WAVs for comparison; physical-speaker listening remains a manual check.
