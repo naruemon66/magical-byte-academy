@@ -21,3 +21,7 @@ Image metadata confirms alpha channels for all ten files. Browser tests verify a
 ## The Arcanexus Royal Crest
 
 Original generated transparent high fantasy shield, with royal blue/amethyst enamel, gold engraving, sapphire crown jewel, luminous spellbook conjuring AI chip/circuits/holographic displays and a named ribbon. `assets/branding/royal-crest.webp` is the large illustration (640px); a separately generated simplified text-free variant is encoded as `crest-small.webp` (192px), `favicon.png` (64px) and `apple-touch-icon.png` (180px). Full and mini PNG source outputs are retained in the cloud generated-images folder; shipped WebP/PNG files are ready to deploy. Total added branding assets are approximately 250 KB. No character, castle, or gameplay files are replaced for this branding change.
+
+## Enchanted guide orb
+
+`assets/branding/guide-orb.webp` is original generated transparent 480px art: glass sphere, swirling pink/violet/sky-blue magical liquid, enchanted cyan AI chip and circuits, gold/amethyst pedestal. WebP90/alpha100, about81KB. Both introductory guides use it; the nickname page uses the Royal Crest. This is finished artwork, not the earlier CSS gradient orb.

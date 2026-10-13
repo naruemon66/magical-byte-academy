@@ -1,6 +1,6 @@
 {
   "name": "arcanexus-academy",
-  "version": "2.7.0",
+  "version": "2.8.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -12,6 +12,7 @@
     "test:portraits": "node tests/portraits.cjs",
     "test:presentation": "node tests/presentation.cjs",
     "test:quests": "node tests/quest-navigation.cjs",
-    "test:branding": "node tests/branding.cjs"
+    "test:branding": "node tests/branding.cjs",
+    "test:navigation-art": "node tests/navigation-art.cjs"
   }
 }

@@ -384,3 +384,10 @@ Feedback ต้องอธิบายว่าทำไมคำตอบจ�
 - ภาพโปร่งใส `assets/branding/royal-crest.webp` สำหรับหน้าแรกเหนือชื่อและ Loading; `crest-small.webp` ย่อไร้ข้อความสำหรับ Header; `favicon.png` 64px และ `apple-touch-icon.png` 180px เป็นโล่ไร้ข้อความขนาดเล็ก
 - ชื่อทองมี glow พอดี Subtitle/คำขวัญเด่นรอง โลโก้ object-fit:contain และสัดส่วนจัตุรัสคงที่ทั้ง Desktop/Mobile Loading ลอยช้าเมื่อเปิด motion
 - คงปราสาท ตัวละคร เกม และระบบทั้งหมด ตรวจชื่อเก่าทั้งข้อความ/aria-label/alt/Browser Title/Metadata ทดสอบเซฟเดิมต่อเควสต์ได้ และ build/check/tests ผ่าน ไม่มีภาพโลโก้ค้างที่ต้องเติมภายหลัง
+
+## 19. ปุ่มย้อนหน้า ภาพ onboarding และกรอบบทสนทนา
+
+- Back ลูกศรทองซ้ายบนย้อนหน้าภายใน session โดยรักษาคะแนน/เควสต์ ชื่อและ draft ข้ามหน้าของเควสต์ที่ปิดไปแล้ว ไม่ snapshot ข้อมูลเกมเก่า Replay กลับเควสต์หลักได้เมื่อไม่มีหน้าที่เหมาะสม
+- หน้ากรอกชื่อใช้ Royal Crest; Welcome และ Your words are part of the magic ใช้ภาพลูกแก้วโปร่งใส `assets/branding/guide-orb.webp` มีน้ำเวทมนตร์ชมพู/ม่วง/ฟ้ากับชิปและวงจรภายใน รองรับ motion preference เมนูเควสต์แสดงในหน้าการเล่นแทนหน้าคำแนะนำ
+- Desktop ≥901px ลดขยายตัวละครเป็น 1.12 เผื่อระยะเหนือศีรษะรวมขณะ idle; mobile คงขนาดเดิม
+- ป้ายชื่อ Royal Blue/Amethyst ขอบทองอัญมณีอยู่ซ้ายบนของกรอบข้อความ ยาวตามชื่อและ emotion text โดยชื่อเด่นและข้อความประกอบมีขนาดรอง กระดาษเวทมนตร์ขอบทองหลายชั้น หางคำพูด และ glow รองรับ Desktop/Mobile
