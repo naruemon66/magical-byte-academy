@@ -25,3 +25,7 @@ Original generated transparent high fantasy shield, with royal blue/amethyst ena
 ## Enchanted guide orb
 
 `assets/branding/guide-orb.webp` is original generated transparent 480px art: glass sphere, swirling pink/violet/sky-blue magical liquid, enchanted cyan AI chip and circuits, gold/amethyst pedestal. WebP90/alpha100, about81KB. Both introductory guides use it; the nickname page uses the Royal Crest. This is finished artwork, not the earlier CSS gradient orb.
+
+## Orion and Ember
+
+Two additional original transparent solo illustrations: Orion the indigo/brown owl with cyan eyes, bronze glasses and crescent pendant; Ember the emerald/teal baby dragon with golden belly, violet-pink wings and amber eyes. Both full bodies include talons/paws/tail and are separate generated files, encoded WebP90/alpha100 without cropping. `assets/characters/orion.webp` and `ember.webp` share the cast pipeline. The poster now has12 visitors: nine humans at equal scale across rows (height varied through placement only) and three smaller creatures. Historical10-person descriptions above describe earlier versions.
