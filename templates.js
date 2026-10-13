@@ -1,10 +1,13 @@
 import {characters} from './cases.js';
+import {prepareStep} from './communication.js';
+import {requestModels} from './request-models.js';
+import {teamTemplates} from './team-talk.js';
 
 // 30 authored technical scenarios. Randomization selects these reviewed rules;
 // it does not invent advice or call an AI. Each scenario has three technical turns.
 const t=(id,character,title,problem,vocabulary,investigate,solve,verify)=>({id,character,title,problem,vocabulary,technical:[investigate,solve,verify]});
 // Technical turn: visitor line, goal, example, synonym groups, outcome, learning note.
-export const templates = [
+const supportTemplates = [
  t('wifi-settings','luna','A signal in the tower','My laptop cannot connect to Wi-Fi.',[['wireless','A connection without a physical cable.'],['airplane mode','A setting that disables wireless connections.']],
  ['The wireless icon is off. Where should I look?','Ask about Wi-Fi or airplane mode.','Could you check whether Wi-Fi is enabled and airplane mode is off?',[['wi-fi','wifi','wireless','airplane'],['check','enabled','off','on']],'Airplane mode is on. That explains the missing connection.','Diagnose the setting before changing the network.'],
  ['Airplane mode was on. What should I do?','Turn airplane mode off and join the academy guest network.','Please turn airplane mode off and connect to Academy-Guest.',[['airplane'],['off'],['academy-guest','academy guest']],'I joined Academy-Guest. The connection icon is back.','Name the correct network; do not ask for a password to be disclosed.'],
@@ -127,6 +130,7 @@ export const templates = [
  ['How should we make the final decision?','Review pilot evidence against the requirements.','Review the pilot evidence against the requirements.',[['review','compare'],['evidence','results'],['requirement']],'The decision will use documented results instead of promises.','A professional recommendation explains its evidence and trade-offs.'])
 ];
 
+export const templates=[...supportTemplates,...teamTemplates];
 const closingLines={
  luna:['I can go back to my lesson now. Thank you for being patient with me.','I feel a little more confident. I will remember your advice.'],
  mix:['That gives me a clear next step for my experiment. Thanks for working through it with me.','I will put this in my project notes. See you at the next experiment!'],
@@ -179,11 +183,20 @@ export function materialize(templateId,variant=0,difficulty=0){
  const technical=t.technical.map((parts,i)=>{const [line,goal,example,groups,success,lesson]=parts;
  const advanced=difficulty===2&&i===1,polite=difficulty>=1&&i===1;
  const model=polite&&!/^(please|could|would)/i.test(example)?'Please '+example[0].toLowerCase()+example.slice(1):example;
- return {phase:i+1,line,goal:goal+(polite?' Use a polite request.':'')+(advanced?' Explain the purpose using “so that”.':''),hint:lesson,example:model+(advanced?` I recommend this so that ${purposes[t.id]}.`:''),groups:[...groups,...(polite?[['please','could','would']]:[]),...(advanced?[['so that','because','in order to']]:[])],success,lesson};});
- return {id:t.id,character:t.character,title:t.title,issue:t.problem,opening:`During ${context}, ${person.name} brings a new request to your chamber. ${person.personality}`,context,difficulty:difficulties[difficulty],vocabulary:t.vocabulary,steps:[
+ return {phase:i+1,line,goal:goal+(polite?' Use a polite request.':'')+(advanced?' Explain the purpose using “so that”.':''),hint:lesson,example:model,groups:[...groups,...(polite?[['please','could','would']]:[]),...(advanced?[['so that','because','in order to']]:[])],success,lesson};});
+ const generated={id:t.id,character:t.character,title:t.title,issue:t.problem,opening:`During ${context}, ${person.name} brings a new request to your chamber. ${person.personality}`,context,difficulty:difficulties[difficulty],vocabulary:t.vocabulary,steps:[
  {phase:0,line:`${person.voice} ${t.problem}`,goal:'Greet the visitor politely and offer help.',hint:'Use a greeting and an offer of support.',example:'Hello! How can I help you today?',groups:[['hello','hi','welcome','good morning','good afternoon'],['help','assist','support']],success:'Thank you. Let us work through it together.',lesson:'An open question invites a visitor to explain the situation.'},
  ...technical,
  {phase:4,line:closingLines[t.character][0],goal:'Close professionally and offer further help.',hint:'Thank the visitor and leave a route for future support.',example:'Thank you for visiting. Please contact us if you need more help.',groups:[['thank','welcome','glad','pleasure'],['contact','help','let me know','return']],success:closingLines[t.character][1],lesson:'A professional closing confirms support remains available without promising that problems can never recur.'}
  ]};
+ const teamDirect={
+ 'team-sprint':{3:'Confirm the scope and next steps.'},
+ 'team-review':{3:'Confirm the checks and review approval.'},
+ 'team-help':{2:'Pair on debugging for ten minutes.',3:'Document the cause and next action.'},
+ 'team-blocker':{3:'Update the blocker status and next step.'},
+ 'team-advice':{3:'Record a follow-up task and agree on its owner.'}
+ };
+ generated.steps=generated.steps.map(step=>prepareStep(step,{...(teamDirect[t.id]?.[step.phase]?{direct:teamDirect[t.id][step.phase],professional:step.example}:{}),reason:t.reason||purposes[t.id],...(step.phase===1&&requestModels[t.id]?{polite:requestModels[t.id]}:{}),...(step.phase===2&&t.disagreement?{disagreement:true,professional:step.example,direct:({ 'team-sprint':'Prioritize the sprint goal. Our capacity is limited.', 'team-review':'Add regression tests before merging.', 'team-blocker':'Request authorized access and permission.', 'team-advice':'Make a small tested change to limit release risk.' })[t.id],polite:({ 'team-sprint':'Could you please prioritize the sprint goal within our limited capacity?', 'team-review':'Could you please add regression tests before merging?', 'team-blocker':'Could you please request authorized access and permission?', 'team-advice':'Could you please make a small tested change to limit release risk?' })[t.id]}:{}),...(t.id==='phishing-message'&&step.phase===2?{polite:'Please do not click the link. Report the message to IT.',professional:'I understand your idea, but clicking the link could expose your account. We could avoid clicking and report the message to IT instead because the sender is suspicious.'}:{}),...(t.id==='professional-update'&&step.phase===2?{polite:'Could you please explain the known status and next step without guessing a repair time?',professional:'We could explain the known status and next step without guessing a repair time because staff need verified information.'}:{}),...(t.id==='database-access'&&step.phase===3?{professional:'Shall we verify that the required data is readable without edit access so that the permission boundary is clear?'}:{})}));
+ return generated;
 }
 export const storyExtras=[materialize('device-power'),materialize('research-backup'),materialize('meeting-audio')];

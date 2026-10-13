@@ -1,3 +1,4 @@
+import {assessCommunication,communicationGuide} from './communication.js';
 import {cases} from './story.js';
 import {templates,materialize} from './templates.js';
 export const SAVE_KEY='magical-byte-academy-v1'; // Keep the old key and migrate in place.
@@ -21,7 +22,9 @@ export function loadState(storage){
 }
 export function saveState(storage,state){try{storage.setItem(SAVE_KEY,JSON.stringify(state));return true;}catch{return false;}}
 export function normalize(text){return text.toLowerCase().replace(/[’']/g,'').replace(/[–—]/g,'-').replace(/\s+/g,' ').trim();}
-function has(text,phrase){const escaped=phrase.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');return new RegExp('(?:^|[^a-z0-9])'+escaped+'(?:s)?(?:$|[^a-z0-9])','i').test(text);}
+function has(text,phrase){const escaped=phrase.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');const endings=phrase.includes(' ')?'(?:s)?':phrase.endsWith('e')?'(?:s|d|ing)?':'(?:s|es|ed|ing)?';
+ const forms={choose:['choosing'],save:['saving'],share:['sharing'],use:['using'],change:['changing'],reproduce:['reproducing'],verify:['verifying'],priority:['priorities'],copy:['copies'],run:['running'],sign:['signing']};
+ return new RegExp('(?:^|[^a-z0-9])(?:'+escaped+endings+(forms[phrase]?'|'+forms[phrase].join('|'):'')+')(?:$|[^a-z0-9])','i').test(text);}
 export function evaluate(text,step){
  const n=normalize(text);const words=n.split(/\s+/).filter(Boolean);
  if(words.length<3)return {pass:false,score:0,mood:'worried',title:'Give your visitor a complete thought',details:['Write at least a short sentence explaining what you want to ask or recommend.'],lesson:step.hint};
@@ -29,17 +32,20 @@ export function evaluate(text,step){
  const rude=/\b(?:stupid|idiot|shut up|your fault|dumb)\b/.test(n);
  if(unsafe||rude)return {pass:false,score:0,mood:'worried',title:unsafe?'Protect the visitor and their data':'Try a more respectful response',details:[unsafe?'Do not request passwords, disable security, or delete data as a shortcut.':'Blaming or insulting a visitor makes it harder to solve the problem together.'],lesson:step.hint};
  const coverage=step.groups.map(g=>g.some(p=>has(n,p)));
- const polite=/\b(?:please|could|would|thank|hello|hi|welcome|may|glad|happy)\b/.test(n)||/\bcan (?:i|you|we)\b/.test(n);
- const clarity=words.length>=6&&words.length<=90;
+ const communication=assessCommunication(text,step);
+ const clarity=words.length>=6&&words.length<=110;
  const negated=/\b(?:do not|dont|never|not to)\b\s+(?:\w+\s+)?(?:check|test|save|report|contact|connect|select|choose|enable|change|reset)\b/.test(n);
- const pass=coverage.every(Boolean)&&!negated;
- const score=Math.round((coverage.filter(Boolean).length/coverage.length)*60+(polite?20:5)+(clarity?20:10));
- const details=[pass?'Your response includes the communication intent and technical points this turn checks.':'The response does not yet cover all the points needed for this situation.'];
- if(!pass)details.push(negated?'You seem to be telling the visitor not to perform a needed step. Rephrase the instruction.':`Include ${step.groups.filter((_,i)=>!coverage[i]).map(g=>g.slice(0,3).join(' / ')).join(' and ')} in a clear question or instruction.`);
- details.push(polite?'Your polite wording helps the visitor feel supported.':'Try “please”, “could you”, or a friendly acknowledgment to make the response warmer.');
- if(!clarity)details.push('Aim for one or two clear sentences, with a specific action or question.');
- details.push('This is a rule-based intent check, not a grammar, fluency, or pronunciation assessment. If it misses a valid answer, use the guided phrases.');
- return {pass,score,mood:pass?(polite?'happy':'thinking'):'worried',title:pass?'A helpful response!':'Let us refine your response',details,lesson:step.lesson};
+ const technical=coverage.every(Boolean)&&!negated;
+ const pass=technical&&!communication.errors.length&&communication.disagree;
+ const raw=Math.round((coverage.filter(Boolean).length/coverage.length)*50+communication.points+(clarity?20:10));
+ const score=communication.errors.length||!communication.disagree?Math.min(raw,45):communication.level==='Direct'?Math.min(raw,65):communication.level==='Polite'?Math.min(raw,85):raw;
+ const details=[pass?'Your response addresses the required task. Compare its communication level to improve it further.':'This response needs revision before the conversation can continue.'];
+ if(!technical)details.push(negated?'You seem to be telling the visitor not to perform a needed step. Rephrase the instruction.':`Include ${step.groups.filter((_,i)=>!coverage[i]).map(g=>g.slice(0,3).join(' / ')).join(' and ')} in a clear question or instruction.`);
+ details.push(...communication.errors,communication.note,communication.pattern);
+ if(communication.level==='Polite')details.push('For the strongest professional response, make the action specific and explain a relevant reason or follow-up.');
+ if(!clarity)details.push('Aim for one or two clear sentences with a specific action or question.');
+ details.push('These are selected Unit 4 rules, not a complete grammar, semantic, fluency, or pronunciation assessment. Use guided phrases if a valid expression is missed.');
+ return {pass,score,mood:pass?(communication.level==='Professional'?'happy':'thinking'):'worried',title:pass?'A helpful response!':'Let us refine your response',details,lesson:step.lesson,communication,comparison:communicationGuide};
 }
 export function advance(state,score,totalCases=cases.length){
  if(state.caseIndex>=totalCases)throw new Error('Story is already complete');

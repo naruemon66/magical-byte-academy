@@ -8,9 +8,11 @@
 
 **Role and story:** You are the Magical IT Advisor in the Magical Technology Support Chamber. Luna, Mix, Direx, Celeste, Noah, Professor Ivy, Aurora, Felix, Mochi, and Serena visit with technical problems. Twelve story cases across four chapters lead to an ongoing support practice mode. Returning visitors remember previous help through relationship-dependent dialogue.
 
-**How to play:** Start or Continue. Read a visitor’s dialogue and the response goal. Type a clear English sentence, or use supported microphone recognition and review, edit, and confirm the transcript before submitting. Read the educational explanation; retry or use Hint and guided phrases. Complete five turns per case. Use the journal for progress, vocabulary, achievements, and practice replay.
+**How to play:** Start or Continue. Read a visitor’s dialogue and the response goal. Choose among four communication responses, type a clear English sentence, or use supported microphone recognition and review, edit, and confirm the transcript before submitting. Read the educational explanation; retry or use Hint and guided phrases. Complete five turns per case. Use the journal for progress, vocabulary, achievements, and practice replay.
 
-**Core loop:** Visitor arrives → English input → rule-based feedback → diagnosis and advice → verified outcome → professional closing → rewards → next visitor. Endless Support cycles 30 authored templates with shuffled order, varied contexts, technical vocabulary, and difficulty. Advanced turns require a purpose explanation. The mode reuses authored content rather than claiming AI-generated novelty.
+**Core loop:** Visitor arrives → English input → rule-based feedback → diagnosis and advice → verified outcome → professional closing → rewards → next visitor. Endless Support cycles 35 authored templates with shuffled order, varied contexts, technical vocabulary, and difficulty. Advanced turns require a purpose explanation. The mode reuses authored content rather than claiming AI-generated novelty.
+
+**Unit 4:** Practice polite requests, offers, suggestions, shared decisions, and Disagree + Suggest through Sprint Planning, Code Review, Asking for Help, Blockers, and teammate advice. Direct, Polite, and Professional feedback distinguishes technical correctness from appropriate communication. Type, Choose, and microphone transcripts use the same evaluator. Team practice is available through the journal without duplicating main rewards.
 
 **Progress:** Story Magic Stars, XP, satisfaction, friendships, chapters, and achievements. Endless statistics and friendships are separate; story replay never duplicates main rewards. LocalStorage saves the active turn and draft. V1 saves migrate without resetting progress.
 
