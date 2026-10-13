@@ -6,7 +6,7 @@
   "scripts": {
     "test": "node --test tests/*.test.js",
     "dev": "python3 -m http.server 8000",
-    "check": "node --check app.js && node --check cases.js && node --check engine.js && node --check story.js && node --check templates.js && node --check communication.js && node --check request-models.js && node --check team-talk.js && node --check music.js && node --check character-stage.js && node --check character-art.js && node --check appreciation.js && node --check certificate.js && node --check journey-history.js",
+    "check": "node --check app.js && node --check cases.js && node --check engine.js && node --check story.js && node --check templates.js && node --check communication.js && node --check request-models.js && node --check team-talk.js && node --check music.js && node --check character-stage.js && node --check character-art.js && node --check appreciation.js && node --check certificate.js && node --check journey-history.js && node --check advisor-avatars.js",
     "test:browser": "node tests/browser.cjs",
     "test:experience": "node tests/experience.cjs",
     "test:portraits": "node tests/portraits.cjs",
@@ -17,6 +17,7 @@
     "test:certificate": "node tests/certificate-scroll.cjs",
     "test:new-visitors": "node tests/new-visitors.cjs",
     "test:feedback": "node tests/scenario-feedback.cjs",
-    "test:history": "node tests/history-browser.cjs"
+    "test:history": "node tests/history-browser.cjs",
+    "test:advisor-menu": "node tests/advisor-menu.cjs"
   }
 }
