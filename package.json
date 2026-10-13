@@ -1,13 +1,14 @@
 {
   "name": "magical-byte-academy",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "private": true,
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js",
     "dev": "python3 -m http.server 8000",
-    "check": "node --check app.js && node --check cases.js && node --check engine.js && node --check story.js && node --check templates.js && node --check communication.js && node --check request-models.js && node --check team-talk.js && node --check music.js && node --check character-stage.js",
+    "check": "node --check app.js && node --check cases.js && node --check engine.js && node --check story.js && node --check templates.js && node --check communication.js && node --check request-models.js && node --check team-talk.js && node --check music.js && node --check character-stage.js && node --check character-art.js",
     "test:browser": "node tests/browser.cjs",
-    "test:experience": "node tests/experience.cjs"
+    "test:experience": "node tests/experience.cjs",
+    "test:portraits": "node tests/portraits.cjs"
   }
 }
