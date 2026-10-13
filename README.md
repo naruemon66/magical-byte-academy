@@ -66,7 +66,7 @@ npm run check
 npm test
 ```
 
-Thirty-two tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
+Thirty-three tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
 
 Optional browser tooling (not a game dependency):
 
@@ -137,3 +137,5 @@ The title screen and game menu open the journey archive. Empty history shows onl
 
 ### Advisor appearance and compact menu
 Choose one of six original advisor appearances, separate from quest characters and an academy role on the name screen. Choices are cosmetic, stored with settings and preserved for a new journey. The profile icon/modal show the selected artwork. Academy Menu folds the menu buttons and music controls while leaving Quest Replay visible; its state survives reload. `npm run test:advisor-menu` covers six distinct images, selection/profile persistence, folding, music and mobile/desktop layout.
+
+The royal profile uses a large advisor portrait, explained statistics with fantasy artwork and local Cinzel numeral glyphs. The menu orders Journal/Music, Settings/Save & title and a full-width archive. Music includes an academy theme plus twelve upbeat visitor themes, synthesized locally at 128–152 BPM, retaining mute/volume and microphone pause.
