@@ -34,6 +34,16 @@ export function assessCommunication(text,step){
  pattern:request?'Request: Could you please + base verb / Would you mind + -ing':proposal?'Suggestion: May I suggest / We could / Shall we':offer?'Offer: I’d be happy to help':safetyDirect?'Clear safety warning: a direct instruction can be appropriate':'Use a functional expression that fits the task, not just a politeness keyword.'};
 }
 function base(text){return text.replace(/^Please\s+/i,'').replace(/^Could you (?:please )?/i,'').replace(/^Would you mind /i,'').replace(/[.!?]$/,'');}
+const gerunds={check:'checking',tell:'telling',share:'sharing',explain:'explaining',record:'recording',clarify:'clarifying',confirm:'confirming'};
+function responseAlternatives(text,phase){
+ if(phase===0)return [text,"Hello! I would be happy to help. Would you mind sharing the details of the problem?","Welcome! I’m happy to help. Could you please explain what happened?"];
+ if(phase===4)return [text,"Thank you for visiting. I am happy to help again; please contact us if you need further support.","Thank you for your patience. I'd be happy to help again. Please let me know if anything else comes up."];
+ let second=text.replace(/May I suggest that we/i,'We could').replace(/Shall we/i,'We could').replace(/Could you please/i,'Would you please').replace(/Would you mind confirming/i,'Could you please confirm').replace(/May I ask/i,'Could you please tell me');
+ let third=text.replace(/We could/i,'Shall we').replace(/May I suggest that we/i,'Shall we').replace(/Could you please (check|tell|share|explain|record|clarify|confirm)/i,(_,verb)=>'Would you mind '+gerunds[verb.toLowerCase()]).replace(/Would you mind confirming/i,'Would you please confirm').replace(/May I ask/i,'Would you mind telling me');
+ if(second===text)second=text+' We could review the next step together.';
+ if(third===text||third===second)third=text+' I would be happy to help with the next step.';
+ return [text,second,third];
+}
 export function prepareStep(original,metadata={}){
  const step=structuredClone(original);step.communication={...metadata,...step.communication};
  step.groups=step.groups.filter(g=>!g.every(word=>['please','could','would'].includes(word)));
@@ -51,7 +61,7 @@ export function prepareStep(original,metadata={}){
   polite||='Could you please '+first[0].toLowerCase()+first.slice(1)+'?'+(rest?' '+rest+'.':'');
   professional||='May I suggest that we '+first[0].toLowerCase()+first.slice(1)+`? ${rest?rest+'. ':''}This is useful because ${reason}.`;
  }
- step.example=professional;
+ step.example=professional;step.alternatives=responseAlternatives(professional,step.phase);
  if(step.phase===2||step.phase===3){polite=polite.replace(/ to (check|test|verify|confirm|protect|avoid|keep|prevent|preserve|reduce|ensure|understand|identify|find) /g,' and $1 ').replace(/\. If it fails, /,' and, if it fails, ');}
  const wrong=step.phase===2?'Could you please share your password with me so I can fix this?':step.phase===0?'Please give me your password so I can help.':step.phase===4?'Thanks. Your problem was stupid; do not come back.':`Would you mind to ${action[0].toLowerCase()+action.slice(1)}?`;
  step.communication.direct=direct;step.communication.polite=polite;step.communication.professional=professional;

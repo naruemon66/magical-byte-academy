@@ -1,0 +1,16 @@
+// Original instrumental score, synthesized locally. No recording, lyrics, CDN,
+// external licensing, or network dependency. User interaction starts the audio.
+const melody=[76,79,83,86,83,79,78,74,76,81,84,88,84,81,79,76,74,78,81,86,81,78,76,72,72,76,79,84,79,76,74,71];
+const chords=[[52,59,64],[48,55,60],[50,57,62],[55,62,67]];
+export class MagicalMusic {
+ constructor({onStatus=()=>{},AudioContextClass=globalThis.AudioContext||globalThis.webkitAudioContext}={}){this.Context=AudioContextClass;this.onStatus=onStatus;this.context=null;this.master=null;this.timer=null;this.enabled=true;this.volume=.25;this.ducked=false;this.visible=true;this.started=false;this.tick=0;this.next=0;}
+ async start(){this.started=true;if(!this.enabled||!this.visible||this.ducked)return false;if(!this.Context){this.onStatus('Background music is not supported in this browser.');return false;}
+ try{if(!this.context){this.context=new this.Context();this.master=this.context.createGain();this.master.connect(this.context.destination);}await this.context.resume();if(!this.enabled||!this.visible||this.ducked){await this.pause();return false;}if(this.context.state!=='running'){this.onStatus('Tap Music to allow background audio.');return false;}this.master.gain.setTargetAtTime(this.volume*.3,this.context.currentTime,.15);if(!this.timer){this.next=this.context.currentTime+.08;this.schedule();this.timer=setInterval(()=>this.schedule(),120);}this.onStatus('Original magical instrumental music is playing.');return true;}catch{this.onStatus('Audio could not start. Tap Music to retry.');return false;}}
+ configure({enabled=this.enabled,volume=this.volume}={}){this.enabled=enabled;this.volume=Math.max(0,Math.min(1,volume));if(this.master)this.master.gain.setTargetAtTime(this.enabled&&!this.ducked?this.volume*.3:0,this.context.currentTime,.15);if(!enabled)this.pause();else if(this.started&&this.visible&&!this.ducked)return this.start();}
+ async pause(){if(this.timer){clearInterval(this.timer);this.timer=null;}if(this.context){this.master.gain.setTargetAtTime(0,this.context.currentTime,.03);try{await this.context.suspend();}catch{}}}
+ async setDucked(value){this.ducked=value;if(value)await this.pause();else if(this.started&&this.enabled&&this.visible)await this.start();}
+ async setVisible(value){this.visible=value;if(!value)await this.pause();else if(this.started&&this.enabled&&!this.ducked)await this.start();}
+ schedule(){if(!this.context||this.context.state!=='running')return;let count=0;while(this.next<this.context.currentTime+.6&&count++<4){const i=this.tick%melody.length;this.tone(melody[i],this.next,1.35,.34,'sine');this.tone(melody[i]+12,this.next,.8,.06,'triangle');if(i%4===0)for(const note of chords[Math.floor(i/8)])this.tone(note,this.next,3.8,.07,'sine');this.next+=.72;this.tick++;}}
+ tone(note,time,duration,level,type){const osc=this.context.createOscillator(),gain=this.context.createGain();osc.type=type;osc.frequency.value=440*2**((note-69)/12);gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(level,time+.06);gain.gain.exponentialRampToValueAtTime(.001,time+duration);osc.connect(gain);gain.connect(this.master);osc.start(time);osc.stop(time+duration+.04);osc.onended=()=>{osc.disconnect();gain.disconnect();};}
+ async dispose(){await this.pause();if(this.context){try{await this.context.close();}catch{}}}
+}

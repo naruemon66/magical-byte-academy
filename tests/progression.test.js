@@ -1,0 +1,18 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {freshState,advance,improveQuest,questRating,playerProgress,loadState,SAVE_KEY,evaluateChoice,evaluate,scoreTier} from '../engine.js';
+import {cases} from '../story.js';import {templates,materialize} from '../templates.js';
+test('quest ratings span 1–5 stars, with best-score totals and XP-based levels',()=>{
+ assert.deepEqual([20,60,75,85,95,100].map(questRating),[1,2,3,4,5,5]);let s=freshState();for(let i=0;i<5;i++)s=advance(s,65).state;assert.equal(s.questResults[0].bestScore,65);assert.equal(questRating(s.questResults[0].bestScore),2);assert.equal(playerProgress(s).totalScore,65);s.xp=400;assert.equal(playerProgress(s).level,3);assert.equal(playerProgress(s).xpToNext,200);
+});
+test('replay improves the best score, preserves later cursor/draft and never farms story rewards',()=>{
+ let s=freshState();for(let i=0;i<5;i++)s=advance(s,65).state;s=advance(s,85).state;s.playerName='Aster';s.draft='A response in the next quest';const original=structuredClone(s);const improved=improveQuest(s,0,100);assert.ok(improved.improved);assert.equal(improved.rating,5);assert.equal(improved.state.questResults[0].attempts,2);for(const key of ['stars','xp','hearts','completed','caseIndex','stepIndex','draft','playerName'])assert.deepEqual(improved.state[key],original[key]);assert.deepEqual(s,original);const lower=improveQuest(improved.state,0,60);assert.equal(lower.bestScore,100);assert.equal(lower.state.questResults[0].lastScore,60);assert.equal(lower.state.questResults[0].attempts,3);assert.equal(lower.improved,false);assert.throws(()=>improveQuest(s,1,100));
+});
+test('existing saves gain quest results, audio settings, and a name without resetting progress',()=>{
+ let s=freshState();for(let i=0;i<5;i++)s=advance(s,85).state;delete s.questResults;delete s.playerName;delete s.settings.music;delete s.settings.musicVolume;const loaded=loadState({getItem:()=>JSON.stringify(s)});assert.equal(loaded.playerName,'');assert.equal(loaded.questResults[0].bestScore,85);assert.equal(loaded.settings.musicVolume,.25);assert.equal(loaded.xp,s.xp);assert.deepEqual(loaded.completed,s.completed);loaded.playerName='อรุณ';const restored=loadState({getItem:()=>JSON.stringify(loaded)});assert.equal(restored.playerName,'อรุณ');
+});
+test('MCQ minor grammar errors earn partial credit; severe advice still blocks; text retains its analysis',()=>{
+ const step=cases[0].steps[1],choice=step.choices.find(c=>c.id==='revise');const r=evaluateChoice(choice.text,step);assert.ok(r.pass);assert.ok(r.partial);assert.equal(r.score,35);assert.equal(scoreTier(r).name,'Growing skill');assert.equal(evaluate(choice.text,step).pass,false);const bad=cases[0].steps[2].choices.find(c=>c.id==='revise');assert.equal(evaluateChoice(bad.text,cases[0].steps[2]).score,0);assert.equal(evaluateChoice(bad.text,cases[0].steps[2]).pass,false);
+});
+test('every story and template turn offers three distinct usable model replies',()=>{
+ for(const c of [...cases,...templates.flatMap(t=>[0,1,2].map(d=>materialize(t.id,0,d)))])for(const s of c.steps){assert.equal(s.alternatives.length,3);assert.equal(new Set(s.alternatives).size,3,`${c.id}:${s.phase}`);for(const text of s.alternatives)assert.ok(evaluate(text,s).pass,`${c.id}:${s.phase}:${text}`);}
+});
