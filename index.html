@@ -5,15 +5,20 @@
  <meta name="theme-color" content="#09152e"><meta name="description" content="Become the Magical IT Advisor in a cinematic fantasy English-learning adventure. Ten characters, story cases, and endless support requests.">
  <title>Magical Byte Academy · Cinematic Fantasy Edition</title>
  <link rel="preload" href="./assets/chamber.webp" as="image"><link rel="preload" href="./assets/cast.webp" as="image">
- <link rel="stylesheet" href="./style.css">
+ <link rel="preload" href="./assets/fonts/cinzel.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="./style.css"><link rel="stylesheet" href="./fantasy.css">
 </head>
 <body>
  <div class="ambient" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
- <header><div class="brand"><span class="sigil" aria-hidden="true">✧</span><span>MAGICAL BYTE<small>ACADEMY</small></span></div><nav id="toolbar" aria-label="Game menu" hidden><button data-action="journal">Journal</button><button data-action="settings">Settings</button><button data-action="home">Save & title</button></nav></header>
+ <header><div class="brand"><span class="sigil" aria-hidden="true">✧</span><span>MAGICAL BYTE<small>ACADEMY</small></span></div></header>
+ <div id="game-layout" class="game-layout">
+ <aside id="game-sidebar" aria-label="Advisor menu and quest path" hidden>
+ <nav id="toolbar" aria-label="Game menu" hidden><button data-action="journal">✦ Journal</button><button data-action="settings">⚙ Settings</button><button data-action="home">⌂ Save & title</button></nav>
  <section id="player-status" aria-label="Advisor level and quest progress" hidden></section>
- <div id="loading" role="status"><div class="loader-orb" aria-hidden="true"></div><h1>Opening the chamber</h1><p id="loading-status">Gathering light and portraits…</p></div>
+ </aside>
  <main id="app" aria-label="Magical Byte Academy game"></main>
+ </div>
+ <div id="loading" role="status"><div class="loader-orb" aria-hidden="true"></div><h1>Opening the chamber</h1><p id="loading-status">Gathering light and portraits…</p></div>
  <dialog id="modal"><button id="close-modal" aria-label="Close dialog">×</button><div id="modal-content"></div></dialog>
- <footer>273411 · English for Computer and Information Technology <span>Illustrated cinematic fantasy · No real-time 3D</span></footer>
+ <footer>273411 · English for Computer and Information Technology <span>Original real-time 3D characters · Magical Academy</span></footer>
  <script type="module" src="./app.js"></script>
 </body></html>

@@ -3,7 +3,7 @@ import {cases} from './story.js';
 import {templates,materialize} from './templates.js';
 export const SAVE_KEY='magical-byte-academy-v1'; // Keep the old key and migrate in place.
 const blankEndless=()=>({completed:0,totalScore:0,bestScore:0,cycles:0,seenTemplates:[],bag:[],lastId:null,lastCharacter:null,active:null,friendships:{}});
-export function freshState(){return {version:2,playerName:'',questResults:Array(cases.length).fill(null),started:false,tutorialDone:false,mode:'story',caseIndex:0,stepIndex:0,completed:[],stars:0,xp:0,hearts:{},satisfaction:[],achievements:[],turnScores:[],attempts:0,settings:{motion:true,largeText:false,music:true,musicVolume:.25},draft:'',vocabulary:[],endless:blankEndless()};}
+export function freshState(){return {version:2,learningPoints:0,importedPoints:0,lastPointsEarned:0,playerName:'',questResults:Array(cases.length).fill(null),started:false,tutorialDone:false,mode:'story',caseIndex:0,stepIndex:0,completed:[],stars:0,xp:0,hearts:{},satisfaction:[],achievements:[],turnScores:[],attempts:0,settings:{motion:true,largeText:false,music:true,musicVolume:.25},draft:'',vocabulary:[],endless:blankEndless()};}
 const count=n=>Number.isSafeInteger(n)&&n>=0;
 const scores=a=>Array.isArray(a)&&a.every(n=>Number.isFinite(n)&&n>=0&&n<=100);
 const strings=a=>Array.isArray(a)&&a.every(n=>typeof n==='string');
@@ -12,6 +12,11 @@ export function loadState(storage){
  try{const raw=storage.getItem(SAVE_KEY);if(!raw)return null;const s=JSON.parse(raw);
  if(![1,2].includes(s.version)||!count(s.caseIndex)||s.caseIndex>cases.length||!count(s.stepIndex)||s.stepIndex>4||!Array.isArray(s.completed)||s.completed.some((v,i)=>v!==i)||s.completed.length>cases.length||s.caseIndex!==s.completed.length||!scores(s.turnScores)||s.turnScores.length!==s.stepIndex||!count(s.stars)||!count(s.xp)||!friendships(s.hearts)||!scores(s.satisfaction)||!strings(s.achievements))return null;
  const base=freshState();const migrated={...base,...s,version:2,started:s.started??true,tutorialDone:s.tutorialDone??true,settings:{...base.settings,...s.settings},draft:typeof s.draft==='string'?s.draft.slice(0,1200):'',vocabulary:strings(s.vocabulary)?s.vocabulary:[]};
+ if(s.learningPoints!==undefined&&(!Number.isFinite(s.learningPoints)||s.learningPoints<0))return null;
+ const recordedPoints=s.satisfaction.reduce((a,b)=>a+b,0)*5+s.turnScores.reduce((a,b)=>a+b,0)+(s.endless?.totalScore||0)*5+(s.endless?.active?.turnScores||[]).reduce((a,b)=>a+b,0);
+ migrated.learningPoints=s.learningPoints??recordedPoints;
+ migrated.importedPoints=Number.isFinite(s.importedPoints)&&s.importedPoints>=0?s.importedPoints:s.learningPoints===undefined?recordedPoints:0;
+ migrated.lastPointsEarned=Number.isFinite(s.lastPointsEarned)&&s.lastPointsEarned>=0&&s.lastPointsEarned<=100?s.lastPointsEarned:0;
  migrated.playerName=typeof s.playerName==='string'?s.playerName.trim().slice(0,32):'';
  if(s.questResults!==undefined&&(!Array.isArray(s.questResults)||s.questResults.length!==cases.length||s.questResults.some((r,i)=>r!==null&&(!s.completed.includes(i)||!Number.isFinite(r.bestScore)||r.bestScore<0||r.bestScore>100||!Number.isFinite(r.lastScore)||r.lastScore<0||r.lastScore>100||!count(r.attempts)||r.attempts<1))))return null;
  migrated.questResults=s.questResults||base.questResults;
@@ -55,7 +60,7 @@ export function evaluate(text,step){
 }
 export function advance(state,score,totalCases=cases.length){
  if(state.caseIndex>=totalCases)throw new Error('Story is already complete');
- const next=structuredClone(state);next.turnScores.push(score);next.stepIndex++;next.draft='';next.attempts=0;
+ const next=earnPoints(state,score);next.turnScores.push(score);next.stepIndex++;next.draft='';next.attempts=0;
  if(next.stepIndex<5)return {state:next,completed:false};
  const satisfaction=Math.round(next.turnScores.reduce((a,b)=>a+b,0)/5);const stars=satisfaction>=90?3:satisfaction>=75?2:1;
  const index=next.caseIndex;const char=cases[index].character;
@@ -82,7 +87,7 @@ export function startEndless(state,rng=Math.random){
 }
 export function endlessCase(state){const a=state.endless.active;return a?materialize(a.templateId,a.variant,a.difficulty):null;}
 export function advanceEndless(state,score){
- const next=structuredClone(state),e=next.endless,a=e.active;if(!a)throw new Error('No active endless case');
+ const next=earnPoints(state,score),e=next.endless,a=e.active;if(!a)throw new Error('No active endless case');
  a.turnScores.push(score);a.stepIndex++;a.draft='';a.attempts=0;if(a.stepIndex<5)return {state:next,completed:false};
  const satisfaction=Math.round(a.turnScores.reduce((p,v)=>p+v,0)/5),c=materialize(a.templateId,a.variant,a.difficulty);
  e.completed++;e.totalScore+=satisfaction;e.bestScore=Math.max(e.bestScore,satisfaction);e.friendships[c.character]=(e.friendships[c.character]||0)+1;e.seenTemplates=[...new Set([...e.seenTemplates,c.id])];
@@ -93,7 +98,7 @@ export function advanceEndless(state,score){
 }
 
 export function questRating(score){return score>=95?5:score>=85?4:score>=75?3:score>=60?2:1;}
-export function playerProgress(state){const level=1+Math.floor(state.xp/200);return {level,xpInLevel:state.xp%200,xpToNext:200-state.xp%200,totalScore:state.questResults.reduce((sum,r)=>sum+(r?.bestScore||0),0),maxScore:cases.length*100};}
+export function playerProgress(state){const level=1+Math.floor(state.xp/200);return {level,learningPoints:state.learningPoints||0,lastPointsEarned:state.lastPointsEarned||0,xpInLevel:state.xp%200,xpToNext:200-state.xp%200,totalScore:state.questResults.reduce((sum,r)=>sum+(r?.bestScore||0),0),maxScore:cases.length*100};}
 export function improveQuest(state,index,score){
  if(!state.completed.includes(index)||!Number.isFinite(score)||score<0||score>100)throw new Error('Invalid completed-quest replay');
  const next=structuredClone(state),old=next.questResults[index]||{bestScore:next.satisfaction[index]||0,lastScore:0,attempts:1};
@@ -108,3 +113,8 @@ export function evaluateChoice(text,step){
  return {...result,partial:result.score<100};
 }
 export function scoreTier(result){if(result.severe)return {name:'Safety first',icon:'🛡️',style:'safety'};if(result.score>=95)return {name:'Professional',icon:'💎',style:'professional'};if(result.score>=75)return {name:'Polite',icon:'🌟',style:'polite'};if(result.score>=50)return {name:'Direct',icon:'🪄',style:'direct'};return {name:'Growing skill',icon:'🌱',style:'learning'};}
+
+export function earnPoints(state,score){
+ if(!Number.isFinite(score)||score<0||score>100)throw new Error('Invalid earned score');
+ const next=structuredClone(state);next.learningPoints=(next.learningPoints||0)+score;next.lastPointsEarned=score;return next;
+}
