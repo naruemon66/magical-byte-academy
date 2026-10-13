@@ -35,3 +35,6 @@ Two additional original transparent solo illustrations: Orion the indigo/brown o
 
 ### Six original Magical IT Advisors
 `assets/advisors/{moon,flame,grove,rune,tide,storm}.webp` are six newly generated standalone portraits, NOT quest-character images. Each has an original face/hair identity and a shared navy/ivory/gold magical IT uniform: cyan circuit traces, visible IT badge, support headset, USB/cable tools and task-specific holographic screens. Original concept portraits were redesigned after the request for prominent IT identity. All six final images were visually inspected, preserve transparent corners and are encoded at 512×768 WebP. Advisor IDs remain unchanged for existing selections. Images are used only for advisor selection/profile, not the quest cast or graduation group.
+
+### Semantic fantasy UI icons
+`assets/ui/*.svg` are original locally drawn vector icons with gold engraving, amethyst fill and cyan accents. Lyre, gear, save document, clock/archive, journal, crystal, star and infinity rune directly represent their actions/statistics. No remote dependencies or generated placeholder art.

@@ -25,12 +25,12 @@ export async function createCertificate(state,characterIds){
  return canvas;
 }
 function download(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
-export function downloadCertificatePNG(canvas){canvas.toBlob(blob=>{if(blob)download(blob,'arcanexus-certificate.png');},'image/png');}
+export function downloadCertificatePNG(canvas,name='arcanexus-certificate.png'){canvas.toBlob(blob=>{if(blob)download(blob,name);},'image/png');}
 export function certificatePDF(canvas){
- const raw=atob(canvas.toDataURL('image/jpeg',.95).split(',')[1]),jpeg=Uint8Array.from(raw,c=>c.charCodeAt(0)),encode=s=>new TextEncoder().encode(s),chunks=[],offsets=[0];let size=0;const push=b=>{chunks.push(b);size+=b.length;};
+ const pageHeight=842*canvas.height/canvas.width;const raw=atob(canvas.toDataURL('image/jpeg',.95).split(',')[1]),jpeg=Uint8Array.from(raw,c=>c.charCodeAt(0)),encode=s=>new TextEncoder().encode(s),chunks=[],offsets=[0];let size=0;const push=b=>{chunks.push(b);size+=b.length;};
  push(encode('%PDF-1.4\n'));const object=(n,body)=>{offsets[n]=size;push(encode(`${n} 0 obj\n${body}\nendobj\n`));};
- object(1,'<< /Type /Catalog /Pages 2 0 R >>');object(2,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');object(3,'<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 589.4] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>');
+ object(1,'<< /Type /Catalog /Pages 2 0 R >>');object(2,'<< /Type /Pages /Kids [3 0 R] /Count 1 >>');object(3,`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 842 ${pageHeight}] /Resources << /XObject << /Im0 4 0 R >> >> /Contents 5 0 R >>`);
  offsets[4]=size;push(encode(`4 0 obj\n<< /Type /XObject /Subtype /Image /Width ${canvas.width} /Height ${canvas.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpeg.length} >>\nstream\n`));push(jpeg);push(encode('\nendstream\nendobj\n'));
- const commands='q 842 0 0 589.4 0 0 cm /Im0 Do Q';object(5,`<< /Length ${encode(commands).length} >>\nstream\n${commands}\nendstream`);const xref=size;push(encode(`xref\n0 6\n0000000000 65535 f \n${offsets.slice(1).map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')}trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`));return new Blob(chunks,{type:'application/pdf'});
+ const commands=`q 842 0 0 ${pageHeight} 0 0 cm /Im0 Do Q`;object(5,`<< /Length ${encode(commands).length} >>\nstream\n${commands}\nendstream`);const xref=size;push(encode(`xref\n0 6\n0000000000 65535 f \n${offsets.slice(1).map(n=>String(n).padStart(10,'0')+' 00000 n \n').join('')}trailer\n<< /Size 6 /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`));return new Blob(chunks,{type:'application/pdf'});
 }
-export function downloadCertificatePDF(canvas){download(certificatePDF(canvas),'arcanexus-certificate.pdf');}
+export function downloadCertificatePDF(canvas,name='arcanexus-certificate.pdf'){download(certificatePDF(canvas),name);}

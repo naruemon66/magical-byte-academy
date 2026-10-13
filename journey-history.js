@@ -6,8 +6,9 @@ export function recordJourney(storage,state,characterIds,now=new Date().toISOStr
  const h=readHistory(storage);if(!played(state))return null;
  let entry=h.entries.find(e=>e.id===h.activeId);
  if(!entry){entry={id:globalThis.crypto?.randomUUID?.()||`${Date.now()}-${Math.random()}`,startedAt:now,updatedAt:now,status:'In progress',stats:null,certificate:null};h.activeId=entry.id;h.entries.push(entry);}
- entry.updatedAt=now;entry.stats=structuredClone({playerName:state.playerName,completed:state.completed,stars:state.stars,xp:state.xp,learningPoints:state.learningPoints,satisfaction:state.satisfaction,endlessCompleted:state.endless.completed});
+ entry.updatedAt=now;entry.stats=structuredClone({playerName:state.playerName,completed:state.completed,stars:state.stars,xp:state.xp,learningPoints:state.learningPoints,satisfaction:state.satisfaction,endlessCompleted:state.endless.completed,advisorAvatar:state.settings.advisorAvatar||'moon',hearts:state.hearts,vocabulary:state.vocabulary,questResults:state.questResults});
  if(state.completed.length===12&&!entry.certificate){entry.completedAt=now;entry.certificate={...structuredClone(entry.stats),certificateIssuedAt:now,characterIds:[...characterIds]};}
+ if(entry.certificate&&!entry.certificate.advisorAvatar){entry.certificate.advisorAvatar=entry.stats.advisorAvatar;entry.certificate.hearts=structuredClone(state.hearts);entry.certificate.vocabulary=[...state.vocabulary];entry.certificate.questResults=structuredClone(state.questResults);}
  entry.status=entry.certificate?'Graduated':'In progress';storage.setItem(HISTORY_KEY,JSON.stringify(h));return entry;
 }
 export function closeJourney(storage,state,characterIds,now){if(!played(state)){const existing=readHistory(storage);if(!existing.activeId)return;}recordJourney(storage,state,characterIds,now);const h=readHistory(storage),entry=h.entries.find(e=>e.id===h.activeId);if(entry&&!entry.certificate)entry.status='Ended early';h.activeId=null;storage.setItem(HISTORY_KEY,JSON.stringify(h));}
