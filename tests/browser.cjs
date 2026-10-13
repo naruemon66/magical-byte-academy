@@ -54,7 +54,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   // Opening practice from a completed Endless reward must return safely with no active request.
   await page.locator('[data-action="journal"]').click();await page.getByText('Story tickets · practice completed cases',{exact:true}).click();await page.locator('[data-replay="0"]').click();await page.locator('#greet').click();for(const step of cases[0].steps)await turn(page,step.example);await page.locator('#next-case').click();assert.ok(await page.locator('#endless-start').isVisible());
   await page.locator('#endless-start').click();assert.match(await page.locator('.returning').textContent(),/advice|previous|last|remember|visit|guidance|session|recommendation/i);
-  await page.locator('[data-action="home"]').click();await page.setViewportSize({width:390,height:844});await page.screenshot({path:'test-results/v2-mobile-title.png',fullPage:true});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+  await page.locator('#ending-home').click();await page.setViewportSize({width:390,height:844});await page.screenshot({path:'test-results/v2-mobile-title.png',fullPage:true});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
 
   // Microphone paths use a simulated browser provider, never actual recorded audio.
   const context=await browser.newContext({viewport:{width:390,height:844}});
@@ -71,7 +71,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   await speech.locator('#record').click();await speech.evaluate(()=>window.activeRecognition.onerror({error:'not-allowed'}));assert.match(await speech.locator('#speech-status').textContent(),/denied/);
   await speech.locator('#type-mode').click();await speech.locator('#answer').fill(cases[0].steps[1].example);await speech.locator('#answer').press('Control+Enter');await speech.locator('#next').click();
   await speech.locator('#speak-mode').click();await speech.evaluate(()=>{delete window.SpeechRecognition;delete window.webkitSpeechRecognition;});await speech.locator('#record').click();assert.match(await speech.locator('#speech-status').textContent(),/does not support/);await speech.locator('#type-mode').click();
-  await speech.locator('[data-action="home"]').click();await speech.locator('#new-game').click();await speech.locator('#profile-form button').click();assert.ok(await speech.locator('#entry-continue').isVisible());await speech.locator('#close-modal').click();await enterSaved(speech);
+  for(let i=0;i<40&&!await speech.locator('#new-game').isVisible();i++)await speech.locator('#back-page').click();await speech.locator('#new-game').click();await speech.locator('#profile-form button').click();assert.ok(await speech.locator('#entry-continue').isVisible());await speech.locator('#close-modal').click();await enterSaved(speech);
   await speech.locator('[data-action="settings"]').click();await speech.locator('#reset-save').click();await speech.locator('#do-reset').click();const reset=await speech.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));assert.equal(reset.started,false);assert.equal(reset.endless.completed,0);
   await context.close();
 

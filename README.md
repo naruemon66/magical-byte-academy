@@ -145,3 +145,5 @@ Music now opens a six-track manual playlist (Academy Overture default), saved wi
 The six selectable songs now use individually authored arrangements and different synthesized voices, rests, meters, bass and accompaniment patterns (132–154 BPM), rather than chiefly changing key. `npm run test:music-arrangements` renders nine-second WAV previews under `test-results/music-*.wav` and verifies audible signal, unique output and no clipping.
 
 Landing now has only Start Game and How to Play. Start enters name/advisor selection first, with saved-journey continuation offered afterward. Audio starts attempting playback at boot; browser autoplay policy may require the first click/tap/key before sound. `npm run test:landing` verifies both fresh/saved entry and preserved progress/draft.
+
+Academy Story replaces the former Save & title sidebar button. It opens a full lore page with original exterior/laboratory art and returns to the same conversation, including draft and accepted-choice feedback. `npm run test:academy-story` verifies both viewport layouts, asset loading and save/conversation preservation.
