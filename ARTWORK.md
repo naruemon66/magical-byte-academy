@@ -32,3 +32,6 @@ Two additional original transparent solo illustrations: Orion the indigo/brown o
 
 ### Enchanted feedback grimoire
 `assets/branding/enchanted-grimoire.webp` is an original AI-generated transparent enchanted book with gold/amethyst covers and cyan holographic rune light. Encoded at 192px for compact feedback icons; no franchise reference or sprite cropping. Score-tier icons reuse the existing guide orb with CSS hue/frame differences; the safety tier uses the academy crest. Feedback icons are decorative, with tier text and numeric scores retained for accessibility.
+
+### Six original Magical IT Advisors
+`assets/advisors/{moon,flame,grove,rune,tide,storm}.webp` are six newly generated standalone portraits, NOT quest-character images. Each has an original face/hair identity and a shared navy/ivory/gold magical IT uniform: cyan circuit traces, visible IT badge, support headset, USB/cable tools and task-specific holographic screens. Original concept portraits were redesigned after the request for prominent IT identity. All six final images were visually inspected, preserve transparent corners and are encoded at 512×768 WebP. Advisor IDs remain unchanged for existing selections. Images are used only for advisor selection/profile, not the quest cast or graduation group.
