@@ -33,7 +33,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   assert.equal(storySave.completed.length,12);assert.ok(storySave.achievements.includes('Chamber of Confidence'));
   await page.locator('#ending-journal').click();await page.getByText('Story tickets · practice completed cases',{exact:true}).click();await page.locator('[data-replay="0"]').click();await page.locator('#greet').click();
   for(const step of cases[0].steps)await turn(page,step.example);
-  const replaySave=await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));const expectedReplay=structuredClone(storySave);expectedReplay.questResults[0].attempts++;assert.deepEqual(replaySave,expectedReplay);
+  const replaySave=await page.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1')));const expectedReplay=structuredClone(storySave);expectedReplay.questResults[0].attempts++;expectedReplay.learningPoints+=500;expectedReplay.lastPointsEarned=100;assert.deepEqual(replaySave,expectedReplay);
   await page.locator('#next-case').click();await page.locator('#endless-start').click();
   const sequence=[];
   for(let i=0;i<36;i++){
@@ -90,7 +90,7 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
    for(let t=0;t<5;t++){await unit.locator('#choice-mode').click();await unit.locator('[name="english-choice"][value="professional"]').check();await unit.locator('#submit').click();assert.match(await unit.locator('#learning').textContent(),/100\s*\/100/);await unit.locator('#next').click();}
    assert.match(await unit.locator('main').textContent(),/Practice complete/);await unit.locator('#next-case').click();
   }
-  assert.deepEqual(await unit.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1'))),beforeTeam);
+  beforeTeam.learningPoints+=2500;beforeTeam.lastPointsEarned=100;assert.deepEqual(await unit.evaluate(()=>JSON.parse(localStorage.getItem('magical-byte-academy-v1'))),beforeTeam);
   await unit.locator('#choice-mode').click();await unit.screenshot({path:'test-results/unit4-choices-mobile.png',fullPage:true});assert.ok(await unit.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));await unit.close();
 
   // A real V1-format save migrates in the browser and resumes the original turn.

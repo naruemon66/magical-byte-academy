@@ -1,5 +1,6 @@
 // Original instrumental score, synthesized locally. No recording, lyrics, CDN,
 // external licensing, or network dependency. User interaction starts the audio.
+export const MUSIC_TEMPO=128;
 const melody=[76,79,83,86,83,79,78,74,76,81,84,88,84,81,79,76,74,78,81,86,81,78,76,72,72,76,79,84,79,76,74,71];
 const chords=[[52,59,64],[48,55,60],[50,57,62],[55,62,67]];
 export class MagicalMusic {
@@ -10,7 +11,7 @@ export class MagicalMusic {
  async pause(){if(this.timer){clearInterval(this.timer);this.timer=null;}if(this.context){this.master.gain.setTargetAtTime(0,this.context.currentTime,.03);try{await this.context.suspend();}catch{}}}
  async setDucked(value){this.ducked=value;if(value)await this.pause();else if(this.started&&this.enabled&&this.visible)await this.start();}
  async setVisible(value){this.visible=value;if(!value)await this.pause();else if(this.started&&this.enabled&&!this.ducked)await this.start();}
- schedule(){if(!this.context||this.context.state!=='running')return;let count=0;while(this.next<this.context.currentTime+.6&&count++<4){const i=this.tick%melody.length;this.tone(melody[i],this.next,1.35,.34,'sine');this.tone(melody[i]+12,this.next,.8,.06,'triangle');if(i%4===0)for(const note of chords[Math.floor(i/8)])this.tone(note,this.next,3.8,.07,'sine');this.next+=.72;this.tick++;}}
- tone(note,time,duration,level,type){const osc=this.context.createOscillator(),gain=this.context.createGain();osc.type=type;osc.frequency.value=440*2**((note-69)/12);gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(level,time+.06);gain.gain.exponentialRampToValueAtTime(.001,time+duration);osc.connect(gain);gain.connect(this.master);osc.start(time);osc.stop(time+duration+.04);osc.onended=()=>{osc.disconnect();gain.disconnect();};}
+ schedule(){if(!this.context||this.context.state!=='running')return;let count=0;while(this.next<this.context.currentTime+.6&&count++<4){const i=this.tick%melody.length;this.tone(melody[i],this.next,.32,.26,'triangle');if(i%2===0)this.tone(melody[i]+12,this.next,.48,.055,'sine');if(i%8===0)for(const note of chords[Math.floor(i/8)])this.tone(note,this.next,1.1,.06,'sine');if(i%2===0)this.tone(chords[Math.floor(i/8)][0]-12,this.next,.22,.12,'sine');if(i%4===2)this.tone(91,this.next,.06,.018,'triangle');this.next+=60/MUSIC_TEMPO/2;this.tick++;}}
+ tone(note,time,duration,level,type){const osc=this.context.createOscillator(),gain=this.context.createGain();osc.type=type;osc.frequency.value=440*2**((note-69)/12);gain.gain.setValueAtTime(0,time);gain.gain.linearRampToValueAtTime(level,time+.015);gain.gain.exponentialRampToValueAtTime(.001,time+duration);osc.connect(gain);gain.connect(this.master);osc.start(time);osc.stop(time+duration+.04);osc.onended=()=>{osc.disconnect();gain.disconnect();};}
  async dispose(){await this.pause();if(this.context){try{await this.context.close();}catch{}}}
 }
