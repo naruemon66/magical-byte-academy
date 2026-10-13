@@ -1,0 +1,3 @@
+async function enterSaved(page){if(await page.locator('#new-game').isVisible())await page.locator('#new-game').click();if(await page.locator('#profile-form').isVisible()){if(!await page.locator('#player-name').inputValue())await page.locator('#player-name').fill('Advisor');await page.locator('#profile-form button').click();if(await page.locator('#entry-continue').count())await page.locator('#entry-continue').click();}}
+async function openHistory(page){await enterSaved(page);while(await page.locator('#intro-next').isVisible())await page.locator('#intro-next').click();if(await page.locator('#greet').isVisible())await page.locator('#greet').click();await page.locator('[data-action="history"]').click();}
+module.exports={enterSaved,openHistory};

@@ -38,3 +38,6 @@ Two additional original transparent solo illustrations: Orion the indigo/brown o
 
 ### Semantic fantasy UI icons
 `assets/ui/*.svg` are original locally drawn vector icons with gold engraving, amethyst fill and cyan accents. Lyre, gear, save document, clock/archive, journal, crystal, star and infinity rune directly represent their actions/statistics. No remote dependencies or generated placeholder art.
+
+### Academy Story environments
+`assets/lore/academy-exterior.webp` and `support-laboratory.webp` are newly AI-generated original cinematic fantasy environments: academy courtyard/spires and the magical IT support laboratory with laptops/holographic diagnostics. Both were visually inspected and WebP-encoded for the lore page. `assets/ui/academy.svg` is an original gold/amethyst tower icon for the Academy Story menu action. These environments do not replace gameplay scene assets.
