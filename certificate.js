@@ -7,7 +7,11 @@ export async function createCertificate(state,characterIds){
  const background=c.createLinearGradient(0,0,1600,1120);background.addColorStop(0,'#fff8e5');background.addColorStop(.5,'#f3e6cd');background.addColorStop(1,'#eee0f2');c.fillStyle=background;c.fillRect(0,0,1600,1120);
  c.strokeStyle='#80602e';c.lineWidth=14;c.strokeRect(30,30,1540,1060);c.strokeStyle='#d6b16a';c.lineWidth=3;c.strokeRect(53,53,1494,1014);c.strokeRect(64,64,1472,992);
  for(const [x,y] of [[82,82],[1518,82],[82,1038],[1518,1038]]){c.save();c.translate(x,y);c.rotate(Math.PI/4);c.fillStyle='#766093';c.fillRect(-12,-12,24,24);c.strokeStyle='#b99650';c.lineWidth=3;c.strokeRect(-17,-17,34,34);c.restore();}
- fitted(c,assets[0],650,74,300,245);fitted(c,assets[1],109,100,190,190);fitted(c,assets[1],1301,100,190,190);
+ fitted(c,assets[0],650,74,300,245);fitted(c,assets[1],1390,95,96,96);
+ // A faded circular royal stamp clipped into the upper-left parchment corner.
+ c.save();c.beginPath();c.rect(64,64,1472,992);c.clip();c.translate(99,92);c.rotate(-.22);c.globalAlpha=.38;c.strokeStyle='#81344d';c.fillStyle='#81344d';c.lineWidth=4;
+ for(const radius of [100,91,66]){c.beginPath();c.arc(0,0,radius,0,Math.PI*2);c.stroke();}
+ c.textAlign='center';c.font='17px AcademyDisplay, Georgia, serif';c.fillText('ARCANEXUS',0,9);c.font='13px AcademyText, serif';c.fillText('ROYAL ACADEMY',0,28);c.font='34px AcademyDisplay, serif';c.fillText('A',0,-14);c.restore();
  const text=(value,y,size,color='#463257',family='AcademyDisplay',align='center',x=800)=>{c.fillStyle=color;c.textAlign=align;c.font=`${size}px ${family}, Georgia, serif`;c.fillText(value,x,y);};
  text('BY ROYAL DECREE',350,28,'#84662f');text('ARCANEXUS ACADEMY',410,58,'#4a335c');text('Certificate of Magical IT Service',473,42,'#80602e');text('This royal commendation is proudly presented to',533,25,'#635472','AcademyText');
  const name=state.playerName||'Magical IT Advisor';let fontSize=62;c.font=`${fontSize}px AcademyDisplay, sans-serif`;while(c.measureText(name).width>1270&&fontSize>25)c.font=`${--fontSize}px AcademyDisplay, sans-serif`;text(name,609,fontSize,'#473260');
@@ -17,7 +21,7 @@ export async function createCertificate(state,characterIds){
  stats.forEach(([label,value],i)=>{const x=164+i*326;c.fillStyle='#302943';c.fillRect(x,760,298,111);c.strokeStyle='#cfa965';c.strokeRect(x,760,298,111);text(label,795,19,'#e8d4ac','AcademyText','center',x+149);text(value,843,34,'#ffdfa0','AcademyDisplay','center',x+149);});
  const humans=characterIds.filter(id=>!['mochi','orion','ember'].includes(id));humans.forEach((id,i)=>fitted(c,assets[3+characterIds.indexOf(id)],100+i*38,885,75,143));['mochi','orion','ember'].forEach((id,i)=>fitted(c,assets[3+characterIds.indexOf(id)],205+i*72,990,67,62));
  fitted(c,assets[2],1275,886,130,130);text('ARCANEXUS ACADEMY',1030,23,'#5a3c70','AcademyDisplay','center',1340);
- text(`Total earned points: ${state.learningPoints.toLocaleString()}`,935,23,'#64546b','AcademyText');text(`Presented on ${new Date().toLocaleDateString('en-GB',{timeZone:'Asia/Bangkok'})}`,974,20,'#77684e','AcademyText');text('A royal keepsake of your Arcanexus Academy journey',1020,19,'#776a80','AcademyText');
+ text(`Total earned points: ${state.learningPoints.toLocaleString()}`,935,23,'#64546b','AcademyText');text(`Presented on ${new Date(state.certificateIssuedAt||Date.now()).toLocaleDateString('en-GB',{timeZone:'Asia/Bangkok'})}`,974,20,'#77684e','AcademyText');text('A royal keepsake of your Arcanexus Academy journey',1020,19,'#776a80','AcademyText');
  return canvas;
 }
 function download(blob,name){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}

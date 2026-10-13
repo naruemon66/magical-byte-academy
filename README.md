@@ -66,7 +66,7 @@ npm run check
 npm test
 ```
 
-Twenty-seven tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
+Thirty-one tests check 12 story cases and all 41 templates at three difficulties, alternative English, safe/unsafe advice, score effects, story rewards, V1 migration, 85 Endless completions across bag boundaries, difficulty/context variation, save corruption, unavailable storage, best-score upgrades, 1–5 rating boundaries, levels, three usable reply models, partial MCQ credit, and music lifecycle.
 
 Optional browser tooling (not a game dependency):
 
@@ -131,3 +131,6 @@ Story quest6 (same `frozen` ID) now belongs to Orion, an indigo owl archive cour
 After the twelve unique story quests, the final reward leads to a royal certificate with real nickname, quest/star/XP/satisfaction totals and carried-forward points. The local canvas document includes school crest, guide orbs, miniature full cast and academy seal, with PNG and single-page PDF downloads. The PDF is an embedded high-resolution certificate image, not selectable text. Dates use Asia/Bangkok. Exports/cancel do not mutate saves.
 
 Continue conversation scrolls to the next character question, or the appreciation screen on completion. Quest Replay offers New journey after graduation; confirmation replaces the current story/rewards/Endless save while keeping nickname/settings, using the established quest order. Save the certificate before restarting. Run `npm run test:certificate` for scroll, real downloads, totals and restart checks on desktop/mobile.
+
+### History & Certificates
+The title screen and game menu open the journey archive. Empty history shows only the enchanted-book artwork. Played journeys keep their own nickname, totals and status; each completed journey freezes its own certificate and issue date. Start New Journey/reset preserves these records, and later graduation creates another certificate. Archived PNG/PDF exports remain available after reload. History is stored locally under `arcanexus-journey-history-v1`, separate from the active save; clearing browser storage removes both. Existing saves are imported on resume, with the import date because original historical dates were not recorded. `npm run test:history` verifies English restart, empty history, archived exports, refresh, and completion of the second twelve-quest journey on desktop/mobile.
