@@ -1,6 +1,6 @@
 {
-  "name": "magical-byte-academy",
-  "version": "2.6.0",
+  "name": "arcanexus-academy",
+  "version": "2.7.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -11,6 +11,7 @@
     "test:experience": "node tests/experience.cjs",
     "test:portraits": "node tests/portraits.cjs",
     "test:presentation": "node tests/presentation.cjs",
-    "test:quests": "node tests/quest-navigation.cjs"
+    "test:quests": "node tests/quest-navigation.cjs",
+    "test:branding": "node tests/branding.cjs"
   }
 }

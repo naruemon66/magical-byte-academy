@@ -1,4 +1,4 @@
-# Magical Byte Academy — Cinematic Fantasy Edition
+# ARCANEXUS ACADEMY — The Enchanted Help Desk
 
 An English-learning visual novel for **273411 — Communicative English for Computer and Information Technology**. You are the Magical IT Advisor in the castle’s Magical Technology Support Chamber. [GAME_DESIGN_V2.md](GAME_DESIGN_V2.md) is the current source of truth and takes precedence over [GAME_DESIGN.md](GAME_DESIGN.md).
 
@@ -113,3 +113,7 @@ Run `CHROMIUM_PATH=/usr/bin/chromium GAME_TEST_URL=http://127.0.0.1:8021 npm run
 The main story cursor (`caseIndex`, `stepIndex`, `draft`) is separate from `selectedQuest`, `replayMode` and `replaySession`. `highestUnlockedQuest` derives only from completed story quests. Completed quests launch a separate practice cursor; selecting the available quest or Continue main story returns immediately without finishing the replay. Title Continue always resumes the unfinished main story (or Endless after the story). The same save key/version is retained, with migration for older saves and stored menu open/closed preference. Replay awards no duplicate story XP/stars/hearts. Profile opening/closing preserves selection and drafts.
 
 Run `npm run test:quests` for the requested eight-step progression/profile sequence on desktop/mobile, and `npm run test:presentation` for poster, dialogue and personalized reward screens. Set `CHROMIUM_PATH` and `GAME_TEST_URL` to your Chromium and running local server.
+
+### ARCANEXUS ACADEMY branding
+
+Where Ancient Magic Meets Modern Technology. Original generated royal shield art is bundled in `assets/branding/`: large transparent `royal-crest.webp`, text-free `crest-small.webp`, `favicon.png` and `apple-touch-icon.png`. The full crest includes the named gold ribbon; the mini version removes lettering for small sizes. Homepage, header, loading screen, browser title and metadata use the new name. The repository/URL and legacy LocalStorage key remain unchanged to preserve deployment and saves. No extra image files are needed.

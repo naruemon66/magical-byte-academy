@@ -1,4 +1,4 @@
-# Magical Byte Academy: The Enchanted Help Desk
+# ARCANEXUS ACADEMY: The Enchanted Help Desk
 
 ## 1. Game Concept
 

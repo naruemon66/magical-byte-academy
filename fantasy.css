@@ -56,3 +56,13 @@ img.quest-avatar{object-fit:cover;object-position:center 8%;background:linear-gr
 /* Close-up dialogue uses only its own solo file; reward portraits remain full body. */
 .character-illustration .character-sprite{transform:scale(1.6);transform-origin:50% 28%}
 .appreciation h1,.advisor-name{overflow-wrap:anywhere}
+/* The Arcanexus Royal Crest: transparent illustrated heraldry, fixed proportions. */
+.brand{align-items:center;gap:12px}.brand-crest{width:56px;height:56px;object-fit:contain;flex-shrink:0;filter:drop-shadow(0 0 9px #ba93f044)}.brand>span{letter-spacing:3px;color:#f4d799}.brand small{letter-spacing:6px}
+.hero-crest{display:block;width:220px;height:220px;object-fit:contain;margin:0 auto 14px;filter:drop-shadow(0 0 15px #9c72dc55) drop-shadow(0 4px 8px #0007)}
+.movie-title .hero-copy{max-width:none;background:linear-gradient(transparent 38%,#10142bed 68%,#10142b 100%);padding-top:650px}
+.movie-title .hero-copy h1{font-size:clamp(32px,4.2vw,56px);background:linear-gradient(#fff6d1,#e7bd69 55%,#fff2be);background-clip:text;-webkit-background-clip:text;color:transparent;letter-spacing:2px;text-shadow:0 0 22px #d4a45d33;overflow-wrap:anywhere}
+.movie-title .hero-copy .academy-subtitle{font-family:AcademyDisplay,Georgia;font-size:1.1rem;color:#eed7a8;letter-spacing:2px;margin:12px auto}
+.movie-title .hero-copy .academy-motto{font-size:.83rem;color:#c9b8de;letter-spacing:.8px;margin:9px auto 22px}
+.loading-crest{object-fit:contain;width:180px;height:180px;filter:drop-shadow(0 0 24px #a17aee55);animation:vn-idle 6s ease-in-out infinite}#loading h1{font-family:AcademyDisplay;font-size:clamp(22px,4vw,32px);color:#f5d58d}#loading>p{margin:5px 0;color:#d2c0e5}
+.character-motion-off .loading-crest{animation:none!important}
+@media(max-width:900px){.brand-crest{width:48px;height:48px}.brand{font-size:13px}.movie-title .hero-copy{padding-top:520px}.hero-crest{width:175px;height:175px;margin-bottom:12px}.movie-title .hero-copy h1{font-size:clamp(25px,7.8vw,39px);letter-spacing:1px;line-height:1.2}.movie-title .hero-copy .academy-subtitle{font-size:.92rem;letter-spacing:1px}.movie-title .hero-copy .academy-motto{font-size:.73rem;line-height:1.6;max-width:270px}}
