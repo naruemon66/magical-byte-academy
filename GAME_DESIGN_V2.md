@@ -420,3 +420,7 @@ History & Certificates is accessible from the title screen and in-game menu. Bef
 
 ## 25. Compact quest sidebar
 Remove the separate Current Quest and Next Quest overview cards. Retain the main-story visitor in the Quest Replay heading, connected quest list, Up next labels, locked/available/completed states and Replay banner. Progression and replay saves are unchanged.
+
+## 26. Foldable fantasy menu and advisor selection
+Academy Menu folds the profile, Journal, History & Certificates, Settings, Save & title and music controls together, leaving Quest Replay independently accessible. Persist its open/closed state in settings. Buttons use existing original transparent fantasy crest/book/orb artwork in gold/amethyst frames.
+The name screen offers six unique illustrated advisor appearances (Moon Weaver, Flame Scholar, Grove Keeper, Rune Sage, Tide Oracle, Storm Warden) and academy roles. These reuse six existing original solo character illustrations; they are cosmetic advisor choices, not six new story characters. Selection is saved in settings, survives refresh/new journeys, and appears in the profile menu and modal. Invalid/missing old-save selection defaults to Moon Weaver. Every appearance can play all quests; roles do not change scores or progression.
