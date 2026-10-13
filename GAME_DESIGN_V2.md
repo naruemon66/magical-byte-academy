@@ -448,3 +448,9 @@ The former Save & title menu action now opens Academy Story, a dedicated full pa
 
 ## 33. Enchanted Chamber Journal presentation
 Use the short Chamber Journal title, a decorative grimoire introduction and compact four-stat cards with semantic icons, gold numerals, amethyst/navy backgrounds and subtle engraved corners. Explain each total briefly. Match expandable journal sections to the same frame language; mobile uses two columns. Preserve Team Talk, replay, glossary, achievements and Endless actions and their values.
+
+## 34. Minimal graduation actions
+Certificate footer contains only Save PNG, Save PDF and Advisor Resume. Export buttons are neutral with gold on press; Advisor Resume stays gold. Remove footer shortcuts to Endless, Journal and title. Endless remains accessible through the in-game Journal.
+
+## 35. Quest-based player levels
+Player level is 1 plus the number of uniquely completed story quests: completing Luna raises Level 1 to 2, and twelve completed quests give Level 13. XP remains unchanged as a separate record of earned rewards. Replay, Team Talk and Endless cannot independently increase story level. Existing saves derive the new level from their completed quest list without resetting XP, rewards or progress. Profile progress represents main-story turns completed out of five toward the next unique quest; after graduation it is full with a completion message. Profile and Advisor Resume share the same level calculation.
