@@ -445,3 +445,6 @@ Landing has exactly Start Game and How to Play. Start always opens name/advisor 
 
 ## 32. Academy Story replaces Save & title
 The former Save & title menu action now opens Academy Story, a dedicated full page with gold Back and Return to journey controls. Its first section places newly generated academy exterior art on the left and school identity/history on the right. A lower section introduces newly generated support-laboratory art and the narrative reason for the Magical Technology Support Chamber: students/staff adopt modern technology but need patient, practical help. Avoid duplicate profile stats or tutorial material. Mobile stacks art and text. Opening/closing this page preserves the main/replay cursor, draft, selected answer, accepted feedback and music; it does not route to the landing screen or reset progress. Automatic saving remains in place.
+
+## 33. Enchanted Chamber Journal presentation
+Use the short Chamber Journal title, a decorative grimoire introduction and compact four-stat cards with semantic icons, gold numerals, amethyst/navy backgrounds and subtle engraved corners. Explain each total briefly. Match expandable journal sections to the same frame language; mobile uses two columns. Preserve Team Talk, replay, glossary, achievements and Endless actions and their values.
