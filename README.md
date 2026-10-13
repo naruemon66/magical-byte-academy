@@ -55,7 +55,7 @@ Speak uses SpeechRecognition/webkitSpeechRecognition. On supported browsers, sta
 
 ## Artwork and accessibility
 
-The local WebP chamber and shared ten-portrait atlas total about **700 KB**. The portrait atlas loads once and is cropped by CSS, so no ten-image request waterfall is needed. The game has an image-loading screen and a readable text-play fallback if artwork fails. System reduced motion and a manual effects toggle are respected; larger reading text, native buttons/dialogs, keyboard focus, and responsive layouts are supported. Details of generated artwork and compression are in [ARTWORK.md](ARTWORK.md).
+The local castle image and ten separate full-body WebP illustrations total about **3.7 MB**. Each solo asset is 264–426 KB, preserves alpha transparency and is shared by poster, dialogue and appreciation views. There is no group-image cropping. The game has an image-loading screen and a readable text-play fallback if artwork fails. System reduced motion and a manual effects toggle are respected; larger reading text, native buttons/dialogs, keyboard focus, and responsive layouts are supported. Details are in [ARTWORK.md](ARTWORK.md).
 
 ## Tests
 
@@ -96,8 +96,20 @@ Relative module and asset paths still support a repository subpath. For Pages se
 
 ### Fantasy interface and illustrated characters
 
-The left menu contains the player profile, level, separate counters, music, and a connected quest path. Accepted turns add to `learningPoints` when Continue is pressed, including replay and Team Talk. Best quest scores and one-time story XP stay separate. Old saves import approximately reconstructable points from stored averages; previously unrecorded replay points cannot be recovered.
+The left menu defaults to Quest Replay: current/next main-story visitor, clickable completed/available quests and disabled locked quests. Player Profile, levels, counters, friendship and statistics are in a separate modal opened by the person icon. Accepted turns add to `learningPoints` when Continue is pressed, including replay and Team Talk. Best quest scores and one-time story XP stay separate. Old saves import approximately reconstructable points from stored averages; previously unrecorded replay points cannot be recovered.
 
-Original instrumental music runs at 128 BPM. Cinzel and Nunito fonts are bundled under their SIL Open Font Licenses in `assets/fonts`. Character artwork is generated original transparent art in a lossless WebP atlas. CSS handles idle and speaking animations; Settings and system reduced-motion preferences disable both. If artwork fails, a readable notice appears and text gameplay continues. The castle scene is unchanged.
+Original instrumental music runs at 128 BPM. Cinzel and Nunito fonts are bundled under their SIL Open Font Licenses in `assets/fonts`. Character artwork is generated original full-body transparent art in ten separate WebP files. The title poster, dialogue, quest path, journal, and appreciation screen share these files; there are no atlas crops. CSS handles idle and speaking animations; Settings and system reduced-motion preferences disable both. If artwork fails, a readable notice appears and text gameplay continues. The castle scene is unchanged.
 
-To install individual transparent PNG/WebP files, add them to `assets/characters/` and set the corresponding `src` in `character-art.js`. Set `aspect` to the image's width/height. Optional `expressions` keys are `neutral`, `worried`, `thinking`, `happy`, and `surprised`; missing expressions use the base portrait. The current story evaluator uses worried, thinking and happy; surprised is available for future authored scenes. No expression files are claimed to exist unless supplied. Do not use opaque image backgrounds or temporary placeholders.
+To install individual transparent PNG/WebP files, add them to `assets/characters/` and set the corresponding `src` in `character-art.js`.  Optional `expressions` keys are `neutral`, `worried`, `thinking`, `happy`, and `surprised`; missing expressions use the same character's base portrait. The current story evaluator uses worried, thinking and happy; surprised is available for future authored scenes. No expression files are claimed to exist unless supplied. Do not use opaque image backgrounds or temporary placeholders.
+
+### Movie poster and character appreciation
+
+The title assembles all ten individual files into a layered cinematic composition over the original castle. Each file is also used in the corresponding dialogue and reward screen. Rewards show the actual completed visitor, the escaped saved player name, character-specific thanks and problem-specific story details. Replay and Team Talk explicitly show zero XP/stars/friendship; Endless shows its own friendship increment. Animation respects Settings and system reduced motion. `appreciation.js` only supplies presentation text; scoring and saves are unchanged.
+
+Run `CHROMIUM_PATH=/usr/bin/chromium GAME_TEST_URL=http://127.0.0.1:8021 npm run test:portraits` for image loading, distinct solo files, idle/reduced motion, image failure, and desktop/mobile checks. `npm run test:browser` covers the full gameplay regression.
+
+### Persistent quest navigation
+
+The main story cursor (`caseIndex`, `stepIndex`, `draft`) is separate from `selectedQuest`, `replayMode` and `replaySession`. `highestUnlockedQuest` derives only from completed story quests. Completed quests launch a separate practice cursor; selecting the available quest or Continue main story returns immediately without finishing the replay. Title Continue always resumes the unfinished main story (or Endless after the story). The same save key/version is retained, with migration for older saves and stored menu open/closed preference. Replay awards no duplicate story XP/stars/hearts. Profile opening/closing preserves selection and drafts.
+
+Run `npm run test:quests` for the requested eight-step progression/profile sequence on desktop/mobile, and `npm run test:presentation` for poster, dialogue and personalized reward screens. Set `CHROMIUM_PATH` and `GAME_TEST_URL` to your Chromium and running local server.

@@ -20,12 +20,12 @@ const url=process.env.GAME_TEST_URL||'http://127.0.0.1:8000';
   await page.screenshot({path:'test-results/v2-game.png',fullPage:true});
   await page.locator('#answer').fill('I enjoy strawberry cake.');await page.locator('#submit').click();assert.equal(await page.locator('#next').count(),0);
   await page.locator('#fallback').click();await page.locator('#learning .guide button').first().click();await page.locator('#clear').click();
-  for(let c=0;c<cases.length;c++){console.log(`Story ${c+1}/12`);
+  for(let c=0;c<cases.length;c++){console.log(`Story ${c+1}/12`);assert.equal(await page.locator('#character-stage').getAttribute('data-character'),cases[c].character);assert.equal(await page.locator('.character-sprite').getAttribute('src'),`./assets/characters/${cases[c].character}.webp`);
    for(let t=0;t<5;t++){
     await turn(page,cases[c].steps[t].example);
     if(c===0&&t===1){await page.reload();await page.locator('#loading').waitFor({state:'hidden'});await page.locator('#continue').click();assert.match(await page.locator('#goal').textContent(),/Academy-Guest/);}
    }
-   assert.match(await page.locator('main').textContent(),/Support ticket resolved/);
+   assert.match(await page.locator('main').textContent(),/Support ticket resolved/);assert.equal(await page.locator('.appreciation-person').getAttribute('data-character'),cases[c].character);assert.equal(await page.locator('.appreciation-person').getAttribute('src'),`./assets/characters/${cases[c].character}.webp`);
    await page.locator('#next-case').click();if(c<cases.length-1)await page.locator('#greet').click();
   }
   assert.match(await page.locator('main').textContent(),/All 12 story cases completed/);

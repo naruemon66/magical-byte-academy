@@ -9,7 +9,7 @@ function finishStory(){let s=freshState();s.started=true;for(const c of cases)fo
 test('V2 has ten distinct portraits, all characters in story, and bounded cinematic assets',()=>{
  assert.equal(Object.keys(characters).length,10);assert.equal(new Set(Object.values(characters).map(p=>p.portrait)).size,10);
  assert.equal(new Set(cases.map(c=>c.character)).size,10);assert.equal(cases.length,12);
- for(const file of ['cast.webp','chamber.webp']){const path=new URL(`../assets/${file}`,import.meta.url);assert.ok(existsSync(path));assert.ok(statSync(path).size<(file==='cast.webp'?2_500_000:600_000));}
+ for(const file of ['chamber.webp',...Object.keys(characters).map(id=>`characters/${id}.webp`)]){const path=new URL(`../assets/${file}`,import.meta.url);assert.ok(existsSync(path));assert.ok(statSync(path).size<(file==='chamber.webp'?600_000:1_500_000));}
  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');assert.ok(!/pixelated|office\.svg|monospace/.test(css));
 });
 test('all story turns and all 35 templates at every difficulty accept their guided answers',()=>{
